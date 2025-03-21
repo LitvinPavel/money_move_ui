@@ -1,7 +1,7 @@
 import axios , { isAxiosError } from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.API_URL || 'http://localhost:3000/api',
+  baseURL: import.meta.env.API_URL || 'https://money-move.vercel.app/api',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
