@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useModel } from 'vue';
+
 export interface Props {
     modelValue: string;
   label: string;
