@@ -1,19 +1,12 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { useAuth } from "@/composables/useAuth";
 import { useCalendar } from "@/composables/useCalendar";
 
-const { user, userProfile, fetchAccounts } = useAuth();
-
-// onMounted(async () => {
-//   await userProfile()
-// })
+const { user, fetchAccounts } = useAuth();
 
 const {
-  currentYear,
-  currentMonth,
   daysInMonth,
-  prevMonth,
-  nextMonth,
   getEventsForDate,
   addEvent,
 } = useCalendar();

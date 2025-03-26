@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { authGuard } from "./guards/authGuard";
 
 const router = createRouter({
   history: createWebHistory(),

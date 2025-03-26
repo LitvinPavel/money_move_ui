@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useAuth } from '@/composables/useAuth';
 
 const { register, error, loading } = useAuth();
@@ -23,7 +23,7 @@ const username = ref<string>('');
     if (passwordMismatch.value) {
     return;
   }
-  await register({ username: username.value, password: password.value });
+  await register({ email: username.value, password: password.value });
 };
 </script>
 
