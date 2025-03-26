@@ -8,7 +8,7 @@ const username = ref<string>('');
   const password = ref<string>('');
 
   const handleLogin = async () => {
-  await login({ username: username.value, password: password.value });
+  await login({ email: username.value, password: password.value });
 };
 </script>
 
@@ -38,6 +38,12 @@ const username = ref<string>('');
         <base-button type="submit" :disabled="loading"> Войти </base-button>
         <p v-if="error" class="text-red-400">{{ error }}</p>
       </form>
+      <p class="mt-10 text-center text-sm/6 text-gray-500">
+        Нет аккаунта?
+        <router-link to="/sign-up" class="font-semibold text-indigo-600 hover:text-indigo-500">
+          Регистрация
+        </router-link>
+      </p>
     </div>
   </div>
 </template>

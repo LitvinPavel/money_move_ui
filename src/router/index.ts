@@ -16,20 +16,26 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: "/login",
-      name: "LoginPage",
-      component: () => import("@/pages/login-page.vue"),
-      meta: { title: "Рабочий стол" },
+      path: "/sign-in",
+      name: "SignInPage",
+      component: () => import("@/pages/sign-in-page.vue"),
+      meta: { title: "Авторизация" },
+    },
+    {
+      path: "/sign-up",
+      name: "SignUpPage",
+      component: () => import("@/pages/sign-up-page.vue"),
+      meta: { title: "Регистрация" },
     },
   ],
 });
 
-router.beforeEach(async (to, from, next) => {
-  if (to.meta.requiresAuth) {
-    await authGuard(to, from, next);
-  } else {
-    next();
-  }
-});
+// router.beforeEach(async (to, from, next) => {
+//   if (to.name === "SignInPage") {
+//     await authGuard(to, from, next);
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;

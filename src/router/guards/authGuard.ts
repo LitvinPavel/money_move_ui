@@ -1,20 +1,19 @@
 import type { RouteLocationNormalized, NavigationGuardNext } from 'vue-router';
-import { useAuth } from '@/composables/useAuth';
+import { api } from '@/api';
+import { useRouter } from 'vue-router';
 
 export const authGuard = async (
     _to: RouteLocationNormalized,
     _from: RouteLocationNormalized,
     next: NavigationGuardNext) => {
-  const { checkAuth, token } = useAuth();
-        console.log(token.value)
-  if (token.value) {
-    next();
-  } else {
-    const isAuthenticated = await checkAuth();
-    if (isAuthenticated) {
-      next();
-    } else {
-      next({ name: 'LoginPage' });
-    }
-  }
+      const router = useRouter();
+      try {
+        const response = await api.post('/auth/refresh', {}, {
+          withCredentials: true
+        });
+        if (response?.data.user) return router.push({ name: 'HomePage' });
+        next();
+      } catch (err) {
+        next();
+      }
 };
