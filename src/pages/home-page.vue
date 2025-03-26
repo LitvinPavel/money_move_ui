@@ -39,6 +39,7 @@ const saveEvent = () => {
   <div class="lg:flex lg:h-full lg:flex-col">
   {{ user }}
   <button @click="fetchAccounts">get</button>
+  <router-link to="sign-in">to login</router-link>
     <CalendarHeader />
     <div
       class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col"
