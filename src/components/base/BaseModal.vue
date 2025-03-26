@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { VNode } from "vue";
 export interface Props {
   visible: boolean;
   headline: string;
