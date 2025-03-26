@@ -78,9 +78,7 @@ export function useAuth() {
 
   const userProfile = async () => {
     try {
-      const response = await api.get('/auth/me', {
-        withCredentials: true
-      });
+      const response = await api.get('/auth/me');
       user.value = response.data?.user
     } catch (err) {
       if (isAxiosError(err)) {

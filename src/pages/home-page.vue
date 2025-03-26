@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useAuth } from "@/composables/useAuth";
 import { useCalendar } from "@/composables/useCalendar";
 
-const { user, fetchAccounts } = useAuth();
+const { user, userProfile } = useAuth();
 
 const {
   daysInMonth,
@@ -38,7 +38,7 @@ const saveEvent = () => {
 <template>
   <div class="lg:flex lg:h-full lg:flex-col">
   {{ user }}
-  <button @click="fetchAccounts">get</button>
+  <button @click="userProfile">get</button>
   <router-link to="sign-in">to login</router-link>
     <CalendarHeader />
     <div

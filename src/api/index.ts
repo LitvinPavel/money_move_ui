@@ -9,30 +9,37 @@ const api = axios.create({
   withCredentials: true
 });
 
-// api.interceptors.response.use(
-//   response => response,
-//   async error => {
-//     const originalRequest = error.config;
-//     if (error.response?.status === 401 && 
-//       !originalRequest._retry) {
-//       originalRequest._retry = true;
-//       try {
-//         // Пытаемся обновить токены
-//         await api.post('/auth/refresh');
+function getCookie(name: string) {
+  let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+api.interceptors.response.use(
+  response => response,
+  async error => {
+    const originalRequest = error.config;
+    const refreshToken = getCookie('refreshToken');
+    if (error.response?.status === 401 && 
+      refreshToken) {
+      try {
+        // Пытаемся обновить токены
+        await api.post('/auth/refresh');
         
-//         // Повторяем оригинальный запрос
-//         return api(originalRequest);
-//       } catch (refreshError) {
-//         // Очищаем куки и перенаправляем на логин
-//         console.log("refreshError")
-//         window.location.href = '/sign-in';
-//         return Promise.reject(refreshError);
-//       }
-//     }
+        // Повторяем оригинальный запрос
+        return api(originalRequest);
+      } catch (refreshError) {
+        // Очищаем куки и перенаправляем на логин
+        console.log("refreshError")
+        window.location.href = '/sign-in';
+        return Promise.reject(refreshError);
+      }
+    }
     
-//     return Promise.reject(error);
-//   }
-// );
+    return Promise.reject(error);
+  }
+);
 
 export {
     api,
