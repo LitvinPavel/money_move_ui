@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useAccount } from "@/composables/useAccount";
 
 enum AccountTypeEnum {
@@ -10,15 +10,10 @@ enum AccountTypeEnum {
 }
 
 const {
-  error,
-  loading,
   accounts,
   refresh,
   totalBalance,
   getTotalBalance,
-  createAccount,
-  updateAccount,
-  deleteAccount,
 } = useAccount();
 
 const selectType = ref<AccountTypeEnum>(AccountTypeEnum.deposit);

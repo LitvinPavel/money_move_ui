@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useAuth } from "@/composables/useAuth";
 import { useCalendar } from "@/composables/useCalendar";
 
-const { user, fetchAccounts } = useAuth();
+const { fetchAccounts } = useAuth();
 
 const {
   daysInMonth,

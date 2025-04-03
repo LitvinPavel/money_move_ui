@@ -9,7 +9,7 @@ enum AccountTypeEnum {
   credit = "credit",
 }
 
-const { error, loading, formCreateData, createAccount } = useAccount();
+const { loading, formCreateData, createAccount } = useAccount();
 
 export interface Props {
   headline: string;

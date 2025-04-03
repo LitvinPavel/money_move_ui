@@ -3,8 +3,6 @@ import { onMounted } from "vue";
 import { useAccount } from "@/composables/useAccount";
 
 const {
-  error,
-  loading,
   totalBalance,
   getTotalBalance,
 } = useAccount();
