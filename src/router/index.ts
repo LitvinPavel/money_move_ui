@@ -3,16 +3,30 @@ import { createRouter, createWebHistory } from "vue-router";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    // {
-    //   path: "/:pathMatch(.*)*",
-    //   name: "ErrorPage",
-    //   redirect: "/",
-    // },
     {
-      path: "/",
-      name: "HomePage",
-      component: () => import("@/pages/home-page.vue"),
-      meta: { requiresAuth: true },
+      path: '/',
+      name: 'Root',
+      component: () => import('@/layouts/default-layout.vue'),
+      children: [
+        {
+          path: "",
+          name: "DashboardPage",
+          component: () => import("@/pages/dashboard-page.vue"),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: "calendar",
+          name: "CalendarPage",
+          component: () => import("@/pages/calendar-page.vue"),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: "history",
+          name: "HistoryPage",
+          component: () => import("@/pages/history-page.vue"),
+          meta: { requiresAuth: true },
+        }
+      ]
     },
     {
       path: "/sign-in",
@@ -26,6 +40,11 @@ const router = createRouter({
       component: () => import("@/pages/sign-up-page.vue"),
       meta: { title: "Регистрация" },
     },
+    // {
+    //   path: "/:pathMatch(.*)*",
+    //   name: "ErrorPage",
+    //   redirect: "/",
+    // },
   ],
 });
 

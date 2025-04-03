@@ -1,6 +1,7 @@
 <script setup lang="ts">
 export interface Props {
   type?: "button" | "submit" | "reset";
+  classes?: string;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -9,7 +10,7 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <button :type="type" class="base-button">
+  <button :type="type" :class="classes" class="base-button">
     <slot />
   </button>
 </template>

@@ -2,13 +2,12 @@
 import { useModel } from "vue";
 
 export interface Props {
-  modelValue: string | number | null | undefined;
+  modelValue: string | number | Object;
+  options: string[] | number[] | Object[];
+  optionKey?: string;
   label: string;
-  type?: string;
   id: string;
-  autocomplete?: string;
   required?: boolean;
-  placeholder?: string;
 }
 
 export type Emits = {
@@ -16,10 +15,7 @@ export type Emits = {
 };
 
 const props = withDefaults(defineProps<Props>(), {
-  autocomplete: "off",
   required: false,
-  type: "text",
-  placeholder: "",
 });
 
 const valueModel = useModel(props, "modelValue");
@@ -28,16 +24,11 @@ const valueModel = useModel(props, "modelValue");
 <template>
   <div>
     <label :for="id" class="form-field-label">{{ label }}</label>
-    <input
-      v-model="valueModel"
-      :type="type"
-      :name="id"
-      :id="id"
-      :autocomplete="autocomplete"
-      :required="required"
-      :placeholder="placeholder"
-      class="form-field-input"
-    />
+    <select v-model="valueModel" :id="id" class="form-field-select">
+      <option v-for="(opt, index) in options" :key="index">
+        {{ opt }}
+      </option>
+    </select>
   </div>
 </template>
 

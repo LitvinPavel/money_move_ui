@@ -1,1 +1,9 @@
 @use 'tailwind';
+
+body {
+    @apply bg-[#fafafa] dark:bg-gray-900;
+
+    &:has(.backdrop) {
+        @apply overflow-hidden md:overflow-auto;
+    }
+}

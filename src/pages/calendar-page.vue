@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useAuth } from "@/composables/useAuth";
 import { useCalendar } from "@/composables/useCalendar";
-
-const { user, fetchAccounts } = useAuth();
 
 const {
   daysInMonth,
@@ -37,7 +34,6 @@ const saveEvent = () => {
 
 <template>
   <div class="lg:flex lg:h-full lg:flex-col">
-  <button @click="fetchAccounts">test</button>
     <CalendarHeader />
     <div
       class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col"
@@ -62,9 +58,6 @@ const saveEvent = () => {
       <input v-model="newEventTitle" placeholder="Название события" />
     </base-modal>
   </div>
-  <!-- <base-button @click="logout">
-    Выйти
-  </base-button> -->
 </template>
 
 <style scoped></style>

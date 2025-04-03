@@ -9,20 +9,16 @@ const api = axios.create({
   withCredentials: true
 });
 
-function getCookie(name: string) {
-  let matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
 api.interceptors.response.use(
   response => response,
   async error => {
     const originalRequest = error.config;
-    const refreshToken = getCookie('refreshToken');
-    if (error.response?.status === 401 && 
-      refreshToken) {
+    // if (error.response.data.error === 'Authorization token required') {
+    //   // window.location.href = '/sign-in';
+    //   return Promise.reject(error.response.data.error);
+    // }
+    
+    if (error.response?.status === 401) {
       try {
         // Пытаемся обновить токены
         await api.post('/auth/refresh');

@@ -94,12 +94,7 @@ export function useAuth() {
 
   const fetchAccounts = async () => {
     try {
-      const response = await api.post('/accounts', {
-        "currency": "USD",
-        "initialBalance": 1000,
-        "bank_name": "tinkoff",
-        "account_name": "Продуктовый"
-      });
+      const response = await api.get('/salary/calculate?month=10&year=2024');
       console.log(response.data)
     } catch (err) {
       if (isAxiosError(err)) {
