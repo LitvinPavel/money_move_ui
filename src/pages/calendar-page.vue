@@ -54,8 +54,14 @@ const saveEvent = () => {
         </div>
       </div>
     </div>
-    <base-modal :visible="isEventModalOpen" headline="Добавить событие" @save="saveEvent" @close="isEventModalOpen = false">
-      <input v-model="newEventTitle" placeholder="Название события" />
+    <base-modal v-model:visible="isEventModalOpen">
+      <form class="space-y-4 mt-8" @submit.prevent="saveEvent">
+        <FormField v-model="newEventTitle" id="eventTitle" label="Название события" required />
+        <button
+          type="submit"
+          class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >Добавить</button>
+        </form>
     </base-modal>
   </div>
 </template>

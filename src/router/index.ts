@@ -10,21 +10,44 @@ const router = createRouter({
       children: [
         {
           path: "",
-          name: "DashboardPage",
-          component: () => import("@/pages/dashboard-page.vue"),
-          meta: { requiresAuth: true },
+          name: "WalletPage",
+          component: () => import("@/pages/wallet-page.vue"),
         },
         {
           path: "calendar",
           name: "CalendarPage",
           component: () => import("@/pages/calendar-page.vue"),
-          meta: { requiresAuth: true },
         },
         {
           path: "history",
           name: "HistoryPage",
           component: () => import("@/pages/history-page.vue"),
-          meta: { requiresAuth: true },
+        },
+        {
+          path: "profile",
+          name: "ProfilePage",
+          component: () => import("@/pages/profile-page.vue"),
+        },
+        {
+          path: "/create",
+          name: "CreateRoot",
+          children: [
+            {
+              path: "account",
+              name: "CreateAccountPage",
+              component: () => import("@/pages/create/account-page.vue"),
+            },
+            {
+              path: "transaction",
+              name: "CreateTransactionPage",
+              component: () => import("@/pages/create/transaction-page.vue"),
+            },
+            {
+              path: "vacation",
+              name: "CreateVacationPage",
+              component: () => import("@/pages/create/vacation-page.vue"),
+            }
+          ]
         }
       ]
     },

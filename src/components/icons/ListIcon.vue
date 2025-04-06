@@ -8,9 +8,8 @@
     <path
       stroke="currentColor"
       stroke-linecap="round"
-      stroke-linejoin="round"
       stroke-width="2"
-      d="M6 18 17.94 6M18 18 6.06 6"
+      d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5"
     />
   </svg>
 </template>

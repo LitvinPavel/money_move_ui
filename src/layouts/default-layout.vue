@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { useAccount } from "@/composables/useAccount";
 
-const showSidebar = ref<boolean>(false);
+const { totalBalance, getTotalBalance } = useAccount();
+
+onMounted(() => {
+  getTotalBalance();
+});
 </script>
 
 <template>
-    <BaseHeader @toogle-sidbar="showSidebar = !showSidebar" />
-    <Sidebar v-model:visible="showSidebar" />
-    <div
-        v-if="showSidebar"
-        class="backdrop md:hidden bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30"
-    />
-    <div class="min-h-[calc(100vh-3.5rem)] p-4 md:ml-64 mt-14 space-y-6 2xl:space-y-14 flex flex-col justify-between">
-        <router-view />
-        <BaseFooter />
-    </div>
+  <div
+    class="fixed top-0 start-0 z-50 flex justify-between w-full py-2 px-4 bg-[#fafafa] dark:bg-gray-900"
+  >
+    <span
+      class="px-3 font-medium text-gray-900 dark:text-gray-300 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
+      >{{ totalBalance?.total }}<i class="ml-0.5">₽</i></span
+    >
+  </div>
+  <div class="h-12" />
+  <router-view />
+  <div class="h-16" />
+  <Navigation />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

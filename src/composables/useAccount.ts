@@ -48,7 +48,7 @@ interface IAccount {
   bank_name: string;
   type: AccountTypeEnum;
   plan: string;
-  interest_rate: number | null;
+  interest_rate: string | null;
   created_at: Date;
 }
 
