@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends baseObj">
-import { ref, useModel } from "vue";
+import { ref, watch, useModel } from "vue";
 import { useLazyload } from "@/composables/useLazyload";
 
 export interface baseObj {

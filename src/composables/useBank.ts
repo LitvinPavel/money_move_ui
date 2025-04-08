@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted, watch } from "vue";
+import { ref, watch } from "vue";
 import { api } from "@/api";
 import catchHandler from "@/utils/catch-handler";
 import type { IBankResponse, IBank } from "@/models/bank";
@@ -15,7 +15,6 @@ export function useBank() {
   const total = ref<number>(0);
   const hasMore = ref<boolean>(true);
   const searchQuery = ref<string>("");
-  // const selectElement = ref<HTMLSelectElement | null>(null);
   const selectedBank = ref<IBank | null>(null);
 
   const getBanks = async (reset = false): Promise<void> => {
@@ -59,31 +58,6 @@ export function useBank() {
     console.log(hasMore.value)
     getBanks();
   }
-
-  // const handleScroll = () => {
-  //   if (!selectElement.value || loading.value || !hasMore.value) return;
-
-  //   const { scrollTop, scrollHeight, clientHeight } = selectElement.value;
-  //   const isNearBottom = scrollTop + clientHeight >= scrollHeight - 50;
-
-  //   if (isNearBottom) {
-  //     page.value += 1;
-  //     getBanks();
-  //   }
-  // };
-
-  // onMounted(() => {
-  //   getBanks(true);
-  //   if (selectElement.value) {
-  //     selectElement.value.addEventListener("scroll", handleScroll);
-  //   }
-  // });
-
-  // onUnmounted(() => {
-  //   if (selectElement.value) {
-  //     selectElement.value.removeEventListener("scroll", handleScroll);
-  //   }
-  // });
 
   watch(searchQuery, (newVal: string) => {
     if (newVal.length === 0 || newVal.length > 2) {

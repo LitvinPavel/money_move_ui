@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useModel, onMounted } from "vue";
+import { ref, useModel, onMounted } from "vue";
 
 export interface Props {
   modelValue: string | number | null | undefined;
