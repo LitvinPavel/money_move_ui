@@ -25,6 +25,12 @@ export function useAccount() {
     plan: 0,
     interest_rate: null
   }
+  const accountTypeList = [
+    { id: AccountTypeEnum.deposit, title: "Депозит" },
+    { id: AccountTypeEnum.savings, title: "Накопительный счет" },
+    { id: AccountTypeEnum.investment, title: "Вклад" },
+    { id: AccountTypeEnum.credit, title: "Кредит/Ипотека" }
+  ]
   const formCreateData = ref<Partial<ICreateAccountBody>>(defaultCreateData);
   
   onMounted(() => {
@@ -108,6 +114,7 @@ export function useAccount() {
     accounts,
     formCreateData,
     defaultCreateData,
+    accountTypeList,
     refresh,
     createAccount,
     updateAccount,
