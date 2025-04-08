@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 import { api } from "@/api";
 import catchHandler from "@/utils/catch-handler";
 import type { IBankResponse, IBank } from "@/models/bank";
@@ -8,13 +8,13 @@ import { useError } from "@/composables/useError";
 export function useBank() {
   const { showError } = useError();
   const error = ref<string | null>(null);
-  const loading = ref(false);
+  const loading = ref<boolean>(false);
   const banks = ref<IBank[]>([]);
   const page = ref<number>(1);
   const pageSize = ref<number>(10);
   const total = ref<number>(0);
-  const hasMore = ref(true);
-  const searchQuery = ref("");
+  const hasMore = ref<boolean>(true);
+  const searchQuery = ref<string>("");
   const selectElement = ref<HTMLSelectElement | null>(null);
   const selectedBank = ref<IBank | null>(null);
 
@@ -79,7 +79,7 @@ export function useBank() {
     }
   });
 
-  watch(searchQuery, (newVal) => {
+  watch(searchQuery, (newVal: string) => {
     if (newVal.length === 0 || newVal.length > 2) {
         console.log(newVal)
       getBanks(true);

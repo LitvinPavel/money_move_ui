@@ -2,9 +2,10 @@
 import { ref, computed } from 'vue';
 import { useAuth } from '@/composables/useAuth';
 
-const { register, error, loading } = useAuth();
+const { register, loading } = useAuth();
 
 const username = ref<string>('');
+  const email = ref<string>('');
   const password = ref<string>('');
     const confirmPassword = ref<string>('');
 
@@ -23,7 +24,7 @@ const username = ref<string>('');
     if (passwordMismatch.value) {
     return;
   }
-  await register({ email: username.value, password: password.value });
+  await register({ name: username.value, email: email.value, password: password.value });
 };
 </script>
 
@@ -38,11 +39,11 @@ const username = ref<string>('');
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-6" @submit.prevent="handleRegister">
         <FormField v-model="username" id="login" label="Логин" autocomplete="nickname" required />
+        <FormField v-model="username" id="email" label="Email" autocomplete="email" required />
         <FormField v-model="password" id="password" label="Пароль" type="password" required />
         <FormField v-model="confirmPassword" id="confirmPassword" label="Подтвердите пароль" type="password" required />
 
         <base-button type="submit" :disabled="loading  || !isFormValid"> {{ loading ? 'Регистрация...' : 'Зарегистрироваться' }} </base-button>
-        <p v-if="error" class="text-red-400">{{ error }}</p>
         <p v-if="passwordMismatch" class="text-red-400">Пароли не совпадают</p>
       </form>
       <p class="mt-10 text-center text-sm/6 text-gray-500">

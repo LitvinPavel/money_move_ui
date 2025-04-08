@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useAuth } from '@/composables/useAuth';
 
-const { login, error, loading } = useAuth();
+const { login, loading } = useAuth();
 
 const username = ref<string>('');
   const password = ref<string>('');
@@ -36,7 +36,6 @@ const username = ref<string>('');
         </form-field>
 
         <base-button type="submit" :disabled="loading"> Войти </base-button>
-        <p v-if="error" class="text-red-400">{{ error }}</p>
       </form>
       <p class="mt-10 text-center text-sm/6 text-gray-500">
         Нет аккаунта?

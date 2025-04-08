@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import type { IBank } from "@/models/bank";
 const selectBank = ref<IBank | null>(null)
 </script>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { ref, onMounted, provide } from 'vue';
 import { useBalance } from "@/composables/useBalance";
 
 const { totalBalance, getTotalBalance } = useBalance();
