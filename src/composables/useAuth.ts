@@ -1,58 +1,40 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { api, isAxiosError } from '@/api';
+import { api } from '@/api';
+import catchHandler from "@/utils/catch-handler";
+import type { IUserCreate, IUser } from '@/models/auth';
+import { useError } from '@/composables/useError';
 
-interface LoginData {
-  email: string;
-  password: string;
-}
-
-interface AuthResponse {
-  accessToken: string;
-}
-
-const TOKEN_KEY = 'money_move_access_token';
 
 export function useAuth() {
+
   const router = useRouter();
-  const token = ref<string | null>(localStorage.getItem(TOKEN_KEY) || null);
-  const user = ref(null)
+  const { showError } = useError();
+  const user = ref<IUser | null>(null)
   const error = ref<string | null>(null);
   const loading = ref(false);
 
-  const register = async (data: LoginData) => {
+  const register = async (data: IUserCreate) => {
     loading.value = true;
     error.value = null;
 
     try {
-      await api.post<AuthResponse>('/auth/register', data);
+      await api.post<IUser>('/auth/register', data);
       router.push({ name: 'SignInPage' });
     } catch (err) {
-      if (isAxiosError(err)) {
-        error.value = err.response?.data.message || 'Ошибка регистрации';
-      } else {
-        error.value = 'Неизвестная ошибка';
-      }
+      showError(catchHandler(err, "Ошибка регистрации"));
     } finally {
       loading.value = false;
     }
   };
 
 
-  const login = async (credentials: LoginData) => {
+  const login = async (credentials: { email: string, password: string }) => {
     try {
-      const response = await api.post<AuthResponse>('/auth/login', credentials, {
-        withCredentials: true
-      });
-      token.value = response.data.accessToken;
-
-      router.push({ name: 'HomePage' });
+      await api.post<IUser>('/auth/login', credentials);
+      router.push({ name: 'WalletPage' });
     } catch (err) {
-      if (isAxiosError(err)) {
-        error.value = err.response?.data.message || 'Ошибка авторизации';
-      } else {
-        error.value = 'Неизвестная ошибка';
-      }
+      showError(catchHandler(err, "Ошибка авторизации"));
     } finally {
       loading.value = false;
     }
@@ -61,15 +43,9 @@ export function useAuth() {
   const logout = async () => {
     try {
       await api.post('/auth/logout');
-      token.value = null;
-      localStorage.removeItem(TOKEN_KEY);
       router.push({ name: 'SignInPage' });
     } catch (err) {
-      if (isAxiosError(err)) {
-        error.value = err.response?.data.message || 'Ошибка авторизации';
-      } else {
-        error.value = 'Неизвестная ошибка';
-      }
+      showError(catchHandler(err, "Ошибка выхода из приложения"));
     } finally {
       loading.value = false;
     }
@@ -78,35 +54,16 @@ export function useAuth() {
 
   const userProfile = async () => {
     try {
-      const response = await api.get('/auth/me');
-      user.value = response.data?.user
+      const response = await api.get<IUser>('/auth/me');
+      user.value = response.data
     } catch (err) {
-      if (isAxiosError(err)) {
-        error.value = err.response?.data.message || 'Ошибка авторизации';
-      } else {
-        error.value = 'Неизвестная ошибка';
-      }
+      showError(catchHandler(err, "Ошибка получения данных пользователя"));
     } finally {
       loading.value = false;
     }
     
   };
 
-  const fetchAccounts = async () => {
-    try {
-      const response = await api.get('/salary/calculate?month=10&year=2024');
-      console.log(response.data)
-    } catch (err) {
-      if (isAxiosError(err)) {
-        error.value = err.response?.data.message || 'Ошибка авторизации';
-      } else {
-        error.value = 'Неизвестная ошибка';
-      }
-    } finally {
-      loading.value = false;
-    }
-    
-  };
 
-  return { login, register, userProfile, fetchAccounts, logout, token, user, error, loading };
+  return { login, register, userProfile, logout, user, loading };
 }

@@ -1,76 +1,31 @@
 import { ref, onMounted } from "vue";
 import { api } from "@/api";
 import catchHandler from "@/utils/catch-handler";
+import type {
+  IGetAccountsQuery,
+  ICreateAccountBody,
+  IUpdateAccountBody,
+  IAccount
+} from '@/models/account';
 
-export type AccountType = "deposit" | "savings" | "investment" | "credit";
-enum AccountTypeEnum {
-    deposit = 'deposit',
-    savings = 'savings',
-    investment = 'investment',
-    credit = 'credit'
-  }
-
-interface IGetAccountsQuery {
-  type?: string;
-  bank_name?: string;
-}
-
-interface IGetTotalBalanceQuery {
-  groupBy?: "bank_name" | "type";
-}
-
-export interface ICreateAccountBody {
-  currency: string;
-  initialBalance?: number;
-  account_name: string;
-  bank_name: string;
-  type: AccountTypeEnum;
-  plan?: number;
-  interest_rate?: number | null;
-}
-
-export interface IUpdateAccountBody {
-  currency?: string;
-  balance?: number;
-  account_name?: string;
-  bank_name?: string;
-  type?: AccountTypeEnum;
-  plan?: number;
-  interest_rate?: number | null;
-}
-
-interface IAccount {
-  id: number;
-  account_number: string;
-  balance: string;
-  currency: string;
-  account_name: string;
-  bank_name: string;
-  type: AccountTypeEnum;
-  plan: string;
-  interest_rate: string | null;
-  created_at: Date;
-}
-
-interface ITotalBalance {
-  [key: string]: number;
-}
+import { AccountTypeEnum } from '@/models/account';
+import { useError } from '@/composables/useError';
 
 export function useAccount() {
+  const { showError } = useError();
   const error = ref<string | null>(null);
   const loading = ref(false);
   const accounts = ref<IAccount[]>([]);
-  const totalBalance = ref<ITotalBalance | undefined>(undefined);
-  const defaultCreateData: Required<ICreateAccountBody> = {
+  const defaultCreateData: Partial<ICreateAccountBody> = {
     currency: 'RUB',
     initialBalance: 0,
     account_name: '',
-    bank_name: '',
+    bank_bic: undefined,
     type: AccountTypeEnum.deposit,
     plan: 0,
     interest_rate: null
   }
-  const formCreateData = ref<Required<ICreateAccountBody>>(defaultCreateData);
+  const formCreateData = ref<Partial<ICreateAccountBody>>(defaultCreateData);
   
   onMounted(() => {
     getAccounts();
@@ -84,25 +39,7 @@ export function useAccount() {
       const response = await api.get<IAccount[]>("/accounts", { params });
       accounts.value = response.data || [];
     } catch (err) {
-      catchHandler(err, "Ошибка получения аккаунтов");
-    } finally {
-      loading.value = false;
-    }
-  };
-
-  const getTotalBalance = async (
-    params?: IGetTotalBalanceQuery
-  ): Promise<void> => {
-    loading.value = true;
-    error.value = null;
-
-    try {
-      const response = await api.get<ITotalBalance>("/accounts/balance", {
-        params,
-      });
-      totalBalance.value = response.data;
-    } catch (err) {
-      catchHandler(err, "Ошибка получения общей суммы");
+      showError(catchHandler(err, "Ошибка получения аккаунтов"));
     } finally {
       loading.value = false;
     }
@@ -114,7 +51,7 @@ export function useAccount() {
       if (response.data) accounts.value.push(response.data);
       _callback();
     } catch (err) {
-      catchHandler(err, "Ошибка создания аккаунта");
+      showError(catchHandler(err, "Ошибка создания аккаунта"));
     } finally {
       loading.value = false;
     }
@@ -128,7 +65,7 @@ export function useAccount() {
       const response = await api.put<IAccount>(`/accounts/${id}`, credentials);
       if (response.data) doUpdate(response.data);
     } catch (err) {
-      catchHandler(err, "Ошибка обновления аккаунта");
+      showError(catchHandler(err, "Ошибка обновления аккаунта"));
     } finally {
       loading.value = false;
     }
@@ -139,7 +76,7 @@ export function useAccount() {
       await api.delete(`/accounts/${id}`);
       doDelete(id);
     } catch (err) {
-      catchHandler(err, "Ошибка удаления аккаунта");
+      showError(catchHandler(err, "Ошибка удаления аккаунта"));
     } finally {
       loading.value = false;
     }
@@ -167,14 +104,11 @@ export function useAccount() {
   }
 
   return {
-    error,
     loading,
     accounts,
-    totalBalance,
     formCreateData,
     defaultCreateData,
     refresh,
-    getTotalBalance,
     createAccount,
     updateAccount,
     deleteAccount,

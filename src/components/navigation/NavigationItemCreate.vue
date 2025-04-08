@@ -5,15 +5,6 @@ import CreditCardAddIcon from "@/components/icons/CreditCardAddIcon.vue";
 import PlusIcon from "@/components/icons/PlusIcon.vue";
 import CalendatPlusIcon from "@/components/icons/CalendatPlusIcon.vue";
 
-export interface Props {
-  isFirst: boolean;
-  isLast: boolean;
-  title: string;
-  link: string;
-}
-
-defineProps<Props>();
-
 const components: { [key: string]: Component } = {
   InsertTableIcon,
   CreditCardAddIcon,
@@ -57,13 +48,9 @@ onUnmounted(() => {
       >
         <component :is="icon" class="w-6 h-6" />
         <span class="sr-only">{{ title }}</span>
-        <div
-          role="tooltip"
-          class="absolute right-full mr-2 z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs dark:bg-gray-700 opacity-0 group-hover:opacity-100"
-        >
+        <base-tooltip direction="right">
           {{ title }}
-          <div class="clip-right"></div>
-        </div>
+        </base-tooltip>
       </router-link>
     </div>
     <button

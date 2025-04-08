@@ -40,7 +40,7 @@ const showDropdownMenu = ref<boolean>(false);
     </button>
     <!-- Dropdown menu -->
     <div
-      class="absolute mt-2 z-10 w-48 bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:divide-gray-600"
+      class="absolute mt-2 z-20 w-48 bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:divide-gray-600"
       :class="{ 'hidden': !showDropdownMenu }"
     >
       <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200">

@@ -23,13 +23,9 @@ defineProps<Props>();
     >
       <slot name="icon" />
       <span class="sr-only">{{ title }}</span>
-      <div
-        role="tooltip"
-        class="absolute bottom-full mb-2 z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs dark:bg-gray-700 opacity-0 group-hover:opacity-100"
-      >
+      <base-tooltip direction="bottom">
         {{ title }}
-        <div class="clip-bottom"></div>
-      </div>
+      </base-tooltip>
     </button>
   </router-link>
 </template>
