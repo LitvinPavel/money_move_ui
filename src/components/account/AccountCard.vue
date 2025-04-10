@@ -19,7 +19,7 @@ defineProps<Props>();
         <div v-if="account.is_salary" class="inline-flex relative group">
           <CashIcon class="text-blue-600 w-3 h-3 " />
           <base-tooltip direction="right" :show-mobile="true">
-            Зарплатный
+            Зарплатный счет
           </base-tooltip>
         </div>
         

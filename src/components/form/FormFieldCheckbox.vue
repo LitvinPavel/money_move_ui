@@ -30,7 +30,7 @@ const valueModel = useModel(props, "modelValue");
     <label
       :for="id"
       class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-      >{{ label }}</label
+      >{{ label }}<span v-if="required" class="ml-1 text-red-400">*</span></label
     >
   </div>
 </template>

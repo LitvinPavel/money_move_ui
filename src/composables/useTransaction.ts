@@ -2,16 +2,18 @@ import { ref, onMounted } from "vue";
 import { api } from "@/api";
 import catchHandler from "@/utils/catch-handler";
 import type {
-  ITransactionHistoryOptions,
+  ITransactionOptions,
+  ITransactionPagination,
   IUpdateTransactionBody,
   IDeposit,
   IWithdrawal,
   ITransfer,
   ITransaction,
+  IGroupedTransactions
 } from "@/models/transaction";
-import { useError } from '@/composables/useError';
+import { useError } from "@/composables/useError";
 
-export function useAccount() {
+export function useTransaction() {
   const { showError } = useError();
   const error = ref<string | null>(null);
   const loading = ref(false);
@@ -22,16 +24,19 @@ export function useAccount() {
   });
 
   const getTransactions = async (
-    params?: ITransactionHistoryOptions
+    params?: ITransactionOptions
   ): Promise<void> => {
     loading.value = true;
     error.value = null;
 
     try {
-      const response = await api.get<ITransaction[]>("transactions/history", {
+      const response = await api.get<{
+        transactions: ITransaction[];
+        pagination: ITransactionPagination;
+      }>("transactions/history", {
         params,
       });
-      transactions.value = response.data || [];
+      transactions.value = response.data.transactions || [];
     } catch (err) {
       showError(catchHandler(err, "Ошибка получения истории транзакций"));
     } finally {
@@ -145,8 +150,31 @@ export function useAccount() {
     getTransactions();
   }
 
+  function groupTransactionsByDay(transactions: ITransaction[]): IGroupedTransactions {
+    const grouped: IGroupedTransactions = {};
+  
+    transactions.forEach((transaction) => {
+      const date = (transaction.created_at as unknown as string).split('T')[0];
+      
+      if (!grouped[date]) {
+        grouped[date] = [];
+      }
+      
+      grouped[date].push(transaction);
+    });
+  
+    for (const date in grouped) {
+      grouped[date].sort((a, b) => 
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    }
+  
+    return grouped;
+  }
+
   return {
     loading,
+    transactions,
     getTransactions,
     refresh,
     createDeposit,
@@ -154,5 +182,6 @@ export function useAccount() {
     createTransfer,
     updateTransaction,
     deleteTransaction,
+    groupTransactionsByDay
   };
 }

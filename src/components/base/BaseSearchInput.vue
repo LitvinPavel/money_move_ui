@@ -9,10 +9,6 @@ export interface Props {
   label?: string;
 }
 
-export type Emits = {
-  (e: "update:modelValue", value: string): void;
-};
-
 const props = withDefaults(defineProps<Props>(), {
   id: "search-input",
   placeholder: "Поиск...",
@@ -23,7 +19,6 @@ const valueModel = useModel(props, "modelValue");
 const searchInputRef = ref<HTMLInputElement | null>(null);
 onMounted(() => {
   if (props.isAutoFocus && searchInputRef.value) {
-    console.log(searchInputRef.value)
     searchInputRef.value.focus();
   }
 });

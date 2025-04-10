@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { useTransaction } from "@/composables/useTransaction";
+
+const { loading, transactions, getTransactions, groupTransactionsByDay } = useTransaction();
+
+onMounted(() => {
+  getTransactions();
+})
 </script>
 
 <template>
@@ -8,13 +15,15 @@
       <DropdownMenu />
     </div>
     <div
+      v-for="(values, key) in groupTransactionsByDay(transactions)"
+      :key="key"
       class="p-5 mb-4 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700"
     >
       <time class="text-lg font-semibold text-gray-900 dark:text-gray-100"
-        >January 13th, 2022</time
+        >January 13th, 2022 {{ key }}</time
       >
       <ol class="divide-y divide-gray-200 dark:divide-gray-700 space-y-1">
-        <li v-for="item in 4" :key="item" class="pt-3 flex items-center justify-between gap-2">
+        <li v-for="transaction in values" :key="transaction.id" class="pt-3 flex items-center justify-between gap-2">
           <div>
             <div class="flex items-center gap-6">
             <div

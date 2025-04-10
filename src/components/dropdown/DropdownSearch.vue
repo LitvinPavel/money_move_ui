@@ -31,8 +31,8 @@ const searchModel = useModel(props, "searchInput");
 const showOptions = ref<boolean>(false);
 
 const closeDropdown = () => {
-    showOptions.value = false;
-}
+  showOptions.value = false;
+};
 
 watch(selectedModel, (newVal: T | null) => {
   if (newVal) {
@@ -42,22 +42,29 @@ watch(selectedModel, (newVal: T | null) => {
 </script>
 <template>
   <div v-click-outside="closeDropdown" class="relative space-y-1">
-    <button
-      class="relative w-full text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm py-2.5 px-3 text-center inline-flex items-center dark:bg-gray-600 dark:border-gray-500 dark:text-gray-400"
-      type="button"
-      @click="showOptions = !showOptions"
-    >
-      <span class="text-gray-900 dark:text-gray-300">{{ selectedModel ? selectedModel[optionKey] : placeholder }}</span>
-      <ChevronSortIcon
-        class="w-5 h-5 absolute right-1 top-1/2 -translate-y-1/2"
+    <div class="relative">
+      <input
+        :id="id"
+        type="text"
+        class="form-field-input"
+        readonly
+        @click="showOptions = !showOptions"
+        :value="selectedModel ? selectedModel[optionKey] : placeholder"
       />
-    </button>
+      <ChevronSortIcon
+        class="w-5 h-5 absolute right-1 top-1/2 -translate-y-1/2 text-gray-900 dark:text-gray-300"
+      />
+    </div>
 
     <div
       v-show="showOptions"
       class="absolute w-full z-10 bg-white rounded-lg shadow-sm dark:bg-gray-700"
     >
-        <BaseSearchInput v-model="searchModel" :is-auto-focus="true" class="p-3" />
+      <BaseSearchInput
+        v-model="searchModel"
+        :is-auto-focus="true"
+        class="p-3"
+      />
       <ul
         ref="selectElement"
         class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"

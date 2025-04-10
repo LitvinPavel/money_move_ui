@@ -22,16 +22,16 @@ watch(selectedBank, (selected: IBank | null) => {
 });
 </script>
 <template>
-  <div>
-    <label class="form-field-label">Банк</label>
+  <form-field id="bank-select" label="Банк" required>
     <DropdownSearch
       v-model:selected="selectedBank"
       v-model:search-input="searchQuery"
-      :options="banks"
-      option-key="name"
       :load-more="loadMoreBanks"
       :loading="loading"
+      :options="banks"
+      option-key="name"
+      id="bank-select"
     />
-  </div>
+  </form-field>
 </template>
 <style></style>

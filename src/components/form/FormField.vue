@@ -1,46 +1,30 @@
 <script setup lang="ts">
-import { useModel } from "vue";
+import type { VNode } from "vue";
 
 export interface Props {
-  modelValue: string | number | null | undefined;
   label: string;
-  type?: string;
-  id: string;
-  autocomplete?: string;
+  id?: string;
   required?: boolean;
-  placeholder?: string;
 }
 
-export type Emits = {
-  (e: "update:value", value: string): void;
-};
-
-const props = withDefaults(defineProps<Props>(), {
-  autocomplete: "off",
+withDefaults(defineProps<Props>(), {
+  id: "form-field",
+  label: "",
   required: false,
-  type: "text",
-  placeholder: "",
 });
-
-const valueModel = useModel(props, "modelValue");
+defineSlots<{
+  default: () => VNode[];
+}>();
 </script>
 
 <template>
   <div>
-    <label :for="id" class="form-field-label">{{ label }}</label>
-    <input
-      v-model="valueModel"
-      :type="type"
-      :name="id"
-      :id="id"
-      :autocomplete="autocomplete"
-      :required="required"
-      :placeholder="placeholder"
-      class="form-field-input"
-    />
+    <label :for="id" class="form-field-label">
+      {{ label }}
+      <span v-if="required" class="ml-1 text-red-400">*</span>
+    </label>
+    <slot />
   </div>
 </template>
 
-<style lang="scss">
-@use "form-field";
-</style>
+<style lang="scss"></style>

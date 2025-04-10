@@ -5,17 +5,11 @@ export interface Props {
   visible: boolean;
 }
 
-export type Emits = {
-  (e: 'update:visible', value: boolean): void;
-};
-
 defineSlots<{
   default: () => VNode[];
 }>();
 
 const props = defineProps<Props>();
-defineEmits<Emits>();
-
 const visibleModel = useModel(props, 'visible');
 
 function close(): void {

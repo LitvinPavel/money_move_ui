@@ -16,11 +16,12 @@ function onSubmit(): void {
     <h3 class="absolute top-0 -mt-3 -ml-1 bg-[#fafafa] dark:bg-gray-900 px-2 z-10 text-gray-500 dark:text-gray-400 text-sm">Создание аккаунта</h3>
     <form class="space-y-4" @submit.prevent="onSubmit">
       <BankSelect v-model="formCreateData.bank_bic" />
-      <FormField
+      <FormFieldInput
         v-model="formCreateData.account_name"
         id="account_name"
         label="Название"
         required
+        placeholder="Введите название счета"
       />
       <FormFieldSelect
         v-model="(formCreateData.type as string)"
@@ -31,24 +32,23 @@ function onSubmit(): void {
         option-key="id"
         option-value="title"
       />
-      <FormField
+      <FormFieldFloatInput
         v-model="formCreateData.initialBalance"
-        type="number"
         id="initialBalance"
         label="Баланс"
       />
-      <FormField
+      <FormFieldFloatInput
         v-if="formCreateData.type !== AccountTypeEnum.deposit"
         v-model="formCreateData.interest_rate"
-        type="number"
+        :max="100"
         id="interest_rate"
         label="Процентная ставка"
       />
-      <FormField
+      <FormFieldFloatInput
         v-model="formCreateData.plan"
-        type="number"
+        :max="100"
         id="plan"
-        label="Планируемые зачисления (в мес.)"
+        label="Планируемые зачисления (% от общей суммы поступлений в мес.)"
       />
       <FormFieldCheckbox
         v-model="formCreateData.is_salary"

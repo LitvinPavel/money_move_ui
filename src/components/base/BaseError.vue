@@ -5,13 +5,7 @@ export interface Props {
   error: string | null;
 }
 
-export type Emits = {
-  (e: "update:visible", value: boolean): void;
-};
-
 const props = defineProps<Props>();
-defineEmits<Emits>();
-
 const errorModel = useModel(props, "error");
 </script>
 

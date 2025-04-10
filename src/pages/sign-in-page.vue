@@ -22,19 +22,8 @@ const username = ref<string>('');
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-6" @submit.prevent="handleLogin">
-        <FormField v-model="username" id="login" label="Логин" autocomplete="nickname" required />
-        <form-field v-model="password" id="password" label="Пароль" type="password" autocomplete="current-password" required>
-          <template #header>
-            <div class="text-sm">
-              <a
-                href="#"
-                class="font-semibold text-indigo-600 hover:text-indigo-500"
-                >Восстановить пароль?</a
-              >
-            </div>
-          </template>
-        </form-field>
-
+        <FormFieldInput v-model="username" id="login" label="Логин" autocomplete="nickname" required />
+        <FormFieldInput v-model="password" id="password" label="Пароль" type="password" autocomplete="current-password" required />
         <base-button type="submit" :disabled="loading"> Войти </base-button>
       </form>
       <p class="mt-10 text-center text-sm/6 text-gray-500">

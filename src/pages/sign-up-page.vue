@@ -38,10 +38,10 @@ const username = ref<string>('');
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-6" @submit.prevent="handleRegister">
-        <FormField v-model="username" id="login" label="Логин" autocomplete="nickname" required />
-        <FormField v-model="username" id="email" label="Email" autocomplete="email" required />
-        <FormField v-model="password" id="password" label="Пароль" type="password" required />
-        <FormField v-model="confirmPassword" id="confirmPassword" label="Подтвердите пароль" type="password" required />
+        <FormFieldInput v-model="username" id="login" label="Логин" autocomplete="nickname" required />
+        <FormFieldInput v-model="username" id="email" label="Email" autocomplete="email" required />
+        <FormFieldInput v-model="password" id="password" label="Пароль" type="password" required />
+        <FormFieldInput v-model="confirmPassword" id="confirmPassword" label="Подтвердите пароль" type="password" required />
 
         <base-button type="submit" :disabled="loading  || !isFormValid"> {{ loading ? 'Регистрация...' : 'Зарегистрироваться' }} </base-button>
         <p v-if="passwordMismatch" class="text-red-400">Пароли не совпадают</p>
