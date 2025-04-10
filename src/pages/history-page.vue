@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import { useTransaction } from "@/composables/useTransaction";
 
-const { loading, transactions, getTransactions, groupTransactionsByDay } = useTransaction();
+const { transactions, getTransactions, groupTransactionsByDay } = useTransaction();
 
 onMounted(() => {
   getTransactions();
