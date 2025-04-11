@@ -6,7 +6,7 @@ export interface baseObj {
 }
 
 export interface Props<T> {
-  modelValue: T | string | null;
+  modelValue?: T | string | number | null;
   options: T[];
   optionKey?: string;
   optionValue?: string;

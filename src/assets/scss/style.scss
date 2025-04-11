@@ -1,5 +1,7 @@
 @use 'tailwind';
 @use "form";
+@use "datepicker";
+@use '../fonts/fonts.css';
 
 body {
     @apply bg-[#fafafa] dark:bg-gray-900 font-mono;

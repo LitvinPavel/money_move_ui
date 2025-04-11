@@ -4,14 +4,14 @@ import ListIcon from "@/components/icons/ListIcon.vue";
 import WalletIcon from "@/components/icons/WalletIcon.vue";
 import PlusIcon from "@/components/icons/PlusIcon.vue";
 import CalendarIcon from "@/components/icons/CalendarIcon.vue";
-import ProfileIcon from "@/components/icons/ProfileIcon.vue";
+import SettingIcon from "@/components/icons/SettingIcon.vue";
 
 const components: { [key: string]: Component } = {
   ListIcon,
   WalletIcon,
   PlusIcon,
   CalendarIcon,
-  ProfileIcon,
+  SettingIcon,
 };
 
 const navList = [
@@ -31,9 +31,9 @@ const navList = [
     icon: components["CalendarIcon"],
   },
   {
-    title: "Профиль",
-    link: "/profile",
-    icon: components["ProfileIcon"],
+    title: "Настройки",
+    link: "/setting",
+    icon: components["SettingIcon"],
   },
 ];
 </script>

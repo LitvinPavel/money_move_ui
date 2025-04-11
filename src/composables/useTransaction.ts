@@ -1,4 +1,5 @@
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { api } from "@/api";
 import catchHandler from "@/utils/catch-handler";
 import type {
@@ -9,16 +10,38 @@ import type {
   IWithdrawal,
   ITransfer,
   ITransaction,
-  IGroupedTransactions
+  IGroupedTransactions,
+  IBalanceSummary,
+  IBalanceQueryParams
 } from "@/models/transaction";
 import { useError } from "@/composables/useError";
+import { TransactionTypeEnum } from "@/models/transaction";
+import { useBalanceSummaryStore } from "@/stores/balance-summary";
+
+
 
 export function useTransaction() {
   const { showError } = useError();
+  const balanceStore = useBalanceSummaryStore();
+  const router = useRouter();
   const error = ref<string | null>(null);
   const loading = ref(false);
   const transactions = ref<ITransaction[]>([]);
+  const balanceSummary = ref<IBalanceSummary | null>(null);
+  const selectTransactionType = ref<TransactionTypeEnum>(TransactionTypeEnum.transfer);
+  const defaultCreateData: Partial<IDeposit & IWithdrawal & ITransfer> = {
+    amount: 0,
+      description: '',
+      date: new Date().toISOString(),
+      is_debt: false
+    }
 
+  const transactionTypeList = [
+      { id: TransactionTypeEnum.deposit, title: "Зачисление" },
+      { id: TransactionTypeEnum.withdrawal, title: "Снятие" },
+      { id: TransactionTypeEnum.transfer, title: "Между счетами" }
+    ]
+    const formCreateData = ref<Partial<IDeposit & IWithdrawal & ITransfer>>(defaultCreateData);
   onMounted(() => {
     getTransactions();
   });
@@ -44,9 +67,26 @@ export function useTransaction() {
     }
   };
 
+  const getBalanceSummary = async (
+    params?: IBalanceQueryParams
+  ): Promise<void> => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const response = await api.get<IBalanceSummary>("transactions/balance", {
+        params,
+      });
+      balanceSummary.value = response.data || null;
+    } catch (err) {
+      showError(catchHandler(err, "Ошибка получения баланса за период"));
+    } finally {
+      loading.value = false;
+    }
+  };
+
   const createDeposit = async (
-    params: IDeposit,
-    _callback: () => void
+    params: IDeposit
   ): Promise<void> => {
     try {
       const response = await api.post<ITransaction>(
@@ -54,7 +94,7 @@ export function useTransaction() {
         params
       );
       if (response.data) transactions.value.push(response.data);
-      _callback();
+      refreshAfteerCreate();
     } catch (err) {
       showError(catchHandler(err, "Ошибка выполнения транзакции"));
     } finally {
@@ -63,8 +103,7 @@ export function useTransaction() {
   };
 
   const createWithdrawal = async (
-    params: IWithdrawal,
-    _callback: () => void
+    params: IWithdrawal
   ): Promise<void> => {
     try {
       const response = await api.post<ITransaction>(
@@ -72,7 +111,7 @@ export function useTransaction() {
         params
       );
       if (response.data) transactions.value.push(response.data);
-      _callback();
+      refreshAfteerCreate();
     } catch (err) {
       showError(catchHandler(err, "Ошибка выполнения транзакции"));
     } finally {
@@ -81,8 +120,7 @@ export function useTransaction() {
   };
 
   const createTransfer = async (
-    params: ITransfer,
-    _callback: () => void
+    params: ITransfer
   ): Promise<void> => {
     try {
       const response = await api.post<{
@@ -94,7 +132,7 @@ export function useTransaction() {
         transactions.value.push({ ...outTransaction });
         transactions.value.push({ ...inTransaction });
       }
-      _callback();
+      refreshAfteerCreate();
     } catch (err) {
       showError(catchHandler(err, "Ошибка выполнения транзакции"));
     } finally {
@@ -150,6 +188,11 @@ export function useTransaction() {
     getTransactions();
   }
 
+  function refreshAfteerCreate() {
+    balanceStore.updateBalanceSummary()
+    router.push({ name: "HistoryPage" })
+  }
+
   function groupTransactionsByDay(transactions: ITransaction[]): IGroupedTransactions {
     const grouped: IGroupedTransactions = {};
   
@@ -175,7 +218,11 @@ export function useTransaction() {
   return {
     loading,
     transactions,
+    transactionTypeList,
+    selectTransactionType,
+    formCreateData,
     getTransactions,
+    getBalanceSummary,
     refresh,
     createDeposit,
     createWithdrawal,

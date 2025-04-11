@@ -2,7 +2,7 @@
 import type { VNode } from "vue";
 
 export interface Props {
-  label: string;
+  label?: string;
   id?: string;
   required?: boolean;
 }
@@ -19,7 +19,7 @@ defineSlots<{
 
 <template>
   <div>
-    <label :for="id" class="form-field-label">
+    <label :for="id" :class="label ? 'form-field-label' : 'sr-only'">
       {{ label }}
       <span v-if="required" class="ml-1 text-red-400">*</span>
     </label>

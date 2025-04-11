@@ -13,10 +13,10 @@ api.interceptors.response.use(
   response => response,
   async error => {
     const originalRequest = error.config;
-    // if (error.response.data.error === 'Authorization token required') {
-    //   // window.location.href = '/sign-in';
-    //   return Promise.reject(error.response.data.error);
-    // }
+    if (error.response.data.error === 'Refresh token required') {
+      window.location.href = '/sign-in';
+      return Promise.reject(error.response.data.error);
+    }
     
     if (error.response?.status === 401) {
       try {

@@ -1,0 +1,56 @@
+/* Light theme */
+.dp__theme_light {
+    --dp-background-color: theme('colors.white');
+    --dp-text-color: theme('colors.gray.800');
+    --dp-hover-color: theme('colors.gray.100');
+    --dp-hover-text-color: theme('colors.gray.800');
+    --dp-primary-color: theme('colors.indigo.600');
+    --dp-primary-text-color: theme('colors.white');
+    --dp-secondary-color: theme('colors.gray.200');
+    --dp-border-color: theme('colors.gray.200');
+    --dp-menu-border-color: theme('colors.gray.200');
+    --dp-disabled-color: theme('colors.gray.300');
+    --dp-scroll-bar-background: theme('colors.gray.200');
+    --dp-border-radius: theme('borderRadius.md');
+    --dp-font-family: theme('fontFamily.sans');
+  }
+  
+  /* Dark theme */
+  .dp__theme_dark {
+    --dp-background-color: theme('colors.gray.800');
+    --dp-text-color: theme('colors.gray.200');
+    --dp-hover-color: theme('colors.gray.700');
+    --dp-hover-text-color: theme('colors.gray.200');
+    --dp-primary-color: theme('colors.indigo.500');
+    --dp-primary-text-color: theme('colors.white');
+    --dp-secondary-color: theme('colors.gray.600');
+    --dp-border-color: theme('colors.gray.600');
+    --dp-menu-border-color: theme('colors.gray.600');
+    --dp-disabled-color: theme('colors.gray.500');
+    --dp-scroll-bar-background: theme('colors.gray.600');
+  }
+  
+  /* Custom styles */
+  .dp__input {
+    @apply w-full h-10 text-sm  focus:outline-none;
+  }
+  
+  .dp__menu {
+    @apply shadow-lg rounded-lg;
+  }
+  
+  .dp__action_buttons {
+    @apply border-t border-gray-200 dark:border-gray-600;
+  }
+  
+  .dp__action_button {
+    @apply text-sm font-medium;
+  }
+  
+  .dp__active_date {
+    @apply font-semibold;
+  }
+  
+  .dp__today {
+    @apply border border-indigo-500;
+  }
