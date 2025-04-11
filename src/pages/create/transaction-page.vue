@@ -76,7 +76,7 @@ function onSubmit(): void {
     </h3>
     <form class="space-y-4" @submit.prevent="onSubmit">
       <FormFieldSelect
-        v-model="(selectTransactionType as string)"
+        v-model="selectTransactionType"
         id="type"
         label="Тип операции"
         required
