@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
 import { useTransaction } from "@/composables/useTransaction";
 import { useAccount } from "@/composables/useAccount";
 import { TransactionTypeEnum } from "@/models/transaction";
-import { useBalanceSummaryStore } from "@/stores/balance-summary";
 
-const balanceStore = useBalanceSummaryStore();
-const router = useRouter();
 const {
   loading,
   selectTransactionType,
