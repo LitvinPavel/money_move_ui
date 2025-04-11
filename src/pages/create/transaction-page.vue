@@ -93,17 +93,16 @@ function onSubmit(): void {
         option-key="id"
         option-value="account_name"
       />
-      <template v-if="selectTransactionType === TransactionTypeEnum.transfer">
-        <FormFieldSelect
-          v-model="formCreateData.toAccountId"
-          id="toAccountId"
-          label="Куда"
-          required
-          :options="accounts"
-          option-key="id"
-          option-value="account_name"
-        />
-      </template>
+      <FormFieldSelect
+        v-show="selectTransactionType === TransactionTypeEnum.transfer"
+        v-model="formCreateData.toAccountId"
+        id="toAccountId"
+        label="Куда"
+        required
+        :options="accounts"
+        option-key="id"
+        option-value="account_name"
+      />
       <FormFieldFloatInput
         v-model="formCreateData.amount"
         id="amount"
