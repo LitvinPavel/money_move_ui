@@ -1,11 +1,23 @@
 <script setup lang="ts">
-import type { IAccount } from '@/models/account';
+import { onMounted } from "vue";
+import type { IAccount } from "@/models/account";
+import { useTransaction } from "@/composables/useTransaction";
+import { usePeriodStore } from "@/stores/period";
 
 export interface Props {
   account: IAccount;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+const periodStore = usePeriodStore();
+const { balanceSummary, getBalanceSummary } = useTransaction();
+onMounted(async () => {
+  await getBalanceSummary({
+    accountId: props.account.id,
+    startDate: periodStore.startDate,
+    endDate: periodStore.endDate,
+  });
+});
 </script>
 <template>
   <div class="flex flex-col w-full p-5 rounded-lg bg-white dark:bg-gray-800">
@@ -15,14 +27,15 @@ defineProps<Props>();
       >
         <h5>{{ account.bank_name }}</h5>
         <span>/</span>
-        <h4 class="text-gray-500 dark:text-gray-400">{{ account.account_name }}</h4>
+        <h4 class="text-gray-500 dark:text-gray-400">
+          {{ account.account_name }}
+        </h4>
         <div v-if="account.is_salary" class="inline-flex relative group">
-          <CashIcon class="text-blue-600 w-3 h-3 " />
+          <CashIcon class="text-blue-600 w-3 h-3" />
           <base-tooltip direction="right" :show-mobile="true">
             Зарплатный счет
           </base-tooltip>
         </div>
-        
       </div>
       <div
         v-if="account.interest_rate"
@@ -32,14 +45,18 @@ defineProps<Props>();
       </div>
     </div>
     <span class="text-2xl font-medium text-gray-900 dark:text-gray-300"
-      >{{ account.balance }}<i class="ml-0.5">₽</i></span
+      >{{ balanceSummary?.totalBalance }}<i class="ml-0.5">₽</i></span
     >
-    <div v-if="account.debt" class="flex justify-end mb-2">
-      <span class="text-red-500 text-xs font-medium">Долг: {{ account.debt }} <i class="ml-0.5">₽</i></span>
+    <div v-if="balanceSummary?.totalDebt" class="flex justify-end mb-2">
+      <span class="text-red-500 text-xs font-medium"
+        >Долг: {{ balanceSummary.totalDebt }} <i class="ml-0.5">₽</i></span
+      >
     </div>
     <div v-if="account.plan" class="mt-auto">
       <div class="flex justify-between mb-1">
-        <span class="text-blue-600 text-xs font-medium">300.00<i class="ml-0.5">₽</i></span>
+        <span class="text-blue-600 text-xs font-medium"
+          >300.00<i class="ml-0.5">₽</i></span
+        >
         <span class="text-xs font-medium text-gray-900 dark:text-gray-300"
           >{{ account.plan }}<i class="ml-0.5">₽</i></span
         >

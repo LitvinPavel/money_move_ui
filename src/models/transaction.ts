@@ -4,6 +4,12 @@ export enum TransactionTypeEnum {
   transfer = "transfer",
 }
 
+export enum TransactionTypeInputEnum {
+  deposit = "deposit",
+  withdrawal = "withdrawal",
+  transfer_out = "transfer_out"
+}
+
 export type TransactionType = "deposit" | "withdrawal" | "transfer_out" | "transfer_in";
 
 export interface ITransaction {

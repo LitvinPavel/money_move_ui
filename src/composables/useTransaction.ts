@@ -197,7 +197,7 @@ export function useTransaction() {
     const grouped: IGroupedTransactions = {};
   
     transactions.forEach((transaction) => {
-      const date = (transaction.created_at as unknown as string).split('T')[0];
+      const date = (transaction.date as unknown as string).split('T')[0];
       
       if (!grouped[date]) {
         grouped[date] = [];
@@ -208,7 +208,7 @@ export function useTransaction() {
   
     for (const date in grouped) {
       grouped[date].sort((a, b) => 
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        new Date(b.date).getTime() - new Date(a.date).getTime()
       );
     }
   
@@ -221,6 +221,7 @@ export function useTransaction() {
     transactionTypeList,
     selectTransactionType,
     formCreateData,
+    balanceSummary,
     getTransactions,
     getBalanceSummary,
     refresh,
