@@ -30,4 +30,30 @@ export const usePeriodStore = defineStore("period", {
       this.setPeriod(defaults.startDate, defaults.endDate);
     },
   },
+  getters: {
+    periodAsMonthsAndYear(): { year: number; month: number }[] {
+      const start = new Date(this.startDate);
+      const end = new Date(this.endDate);
+      const result = [];
+
+      let currentYear = start.getFullYear();
+      let currentMonth = start.getMonth() + 1;
+
+      while (
+        currentYear < end.getFullYear() ||
+        (currentYear === end.getFullYear() &&
+          currentMonth <= end.getMonth() + 1)
+      ) {
+        result.push({ year: currentYear, month: currentMonth });
+
+        currentMonth++;
+        if (currentMonth > 12) {
+          currentMonth = 1;
+          currentYear++;
+        }
+      }
+
+      return result;
+    },
+  },
 });

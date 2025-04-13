@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, provide } from "vue";
 import { useBalanceSummaryStore } from "@/stores/balance-summary";
+import { useSalarySummaryStore } from "@/stores/salary-summary";
 
 const balanceStore = useBalanceSummaryStore();
+const salaryStore = useSalarySummaryStore();
 const error = ref<string | null>(null);
 const setError = (err: string) => {
   error.value = err;
@@ -21,6 +23,11 @@ provide("errorHandler", setError);
     >
       <span>{{
         balanceStore.loading ? "0" : balanceStore.balanceSummary?.totalBalance
+      }}</span
+      ><i class="ml-0.5">₽</i>
+      <span v-if="salaryStore.salarySummary?.total" class="mx-1">/</span>
+      <span>{{
+        salaryStore.salarySummary?.total.toFixed(2)
       }}</span
       ><i class="ml-0.5">₽</i>
     </div>

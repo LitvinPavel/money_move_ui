@@ -14,7 +14,7 @@ const newEventTitle = ref("");
 
 const openEventModal = (date: Date) => {
   if (!date) return;
-  selectedDate.value = date.toISOString().split("T")[0]; // Формат YYYY-MM-DD
+  selectedDate.value = date.toLocaleDateString("sv"); // Формат YYYY-MM-DD
   isEventModalOpen.value = true;
 };
 
@@ -48,7 +48,7 @@ const saveEvent = () => {
             :key="index"
             :date="day.date"
             :is-outside-month="day.isOutsideMonth"
-            :events="getEventsForDate(day.date.toISOString().split('T')[0])"
+            :events="getEventsForDate(day.date.toLocaleDateString('sv'))"
             @day-click="openEventModal(day.date)"
           />
         </div>

@@ -27,3 +27,10 @@ export interface ISalaryCalculationResult {
   };
   total: number;
 }
+
+export interface ISalaryCalculationSummary {
+  advance: number;
+  salary: number;
+  vacationPay?: number;
+  total: number;
+}
