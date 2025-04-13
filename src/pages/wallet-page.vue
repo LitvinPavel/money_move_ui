@@ -13,10 +13,19 @@ const { accounts } = useAccount();
 </script>
 <template>
   <div class="p-4 space-y-6">
+    <base-card-wrapper headline="Зарплата">
+      <AccountCard
+        v-for="account in accounts.filter(
+          ({ type, is_salary }) => type === AccountTypeEnum.deposit && is_salary
+        )"
+        :key="account.id"
+        :account="account"
+      />
+    </base-card-wrapper>
     <base-card-wrapper headline="Депозит">
       <AccountCard
         v-for="account in accounts.filter(
-          ({ type }) => type === AccountTypeEnum.deposit
+          ({ type, is_salary }) => type === AccountTypeEnum.deposit && !is_salary
         )"
         :key="account.id"
         :account="account"
@@ -26,15 +35,6 @@ const { accounts } = useAccount();
       <AccountCard
         v-for="account in accounts.filter(
           ({ type }) => type === AccountTypeEnum.savings
-        )"
-        :key="account.id"
-        :account="account"
-      />
-    </base-card-wrapper>
-    <base-card-wrapper headline="Вклад">
-      <AccountCard
-        v-for="account in accounts.filter(
-          ({ type }) => type === AccountTypeEnum.investment
         )"
         :key="account.id"
         :account="account"

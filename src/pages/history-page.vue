@@ -79,7 +79,7 @@ onMounted(() => {
             <span
               class="mb-1 font-medium text-2xl text-gray-900 dark:text-gray-100"
             >
-              {{ transaction.amount.toFixed(2) }}<i class="ml-0.5">₽</i>
+              {{ transaction.amount.toFixed(2) }}<RubleIcon class="inline-flex w-3 h-3 ml-0.5" />
             </span>
             <p class="text-gray-600 dark:text-gray-400">
               {{ transaction.description }}

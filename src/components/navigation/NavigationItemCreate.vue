@@ -31,13 +31,16 @@ const navList = [
 
 const showMenu = ref(false);
 
-onUnmounted(() => {
+const closeMenu = (): void => {
   showMenu.value = false;
+}
+onUnmounted(() => {
+  closeMenu();
 });
 </script>
 
 <template>
-  <div class="absolute end-5 bottom-1">
+  <div v-click-outside="closeMenu" class="absolute end-5 bottom-1">
     <div v-if="showMenu" class="flex flex-col items-center mb-4 space-y-2">
       <router-link
         v-for="({ title, icon, link }, index) in navList"
@@ -62,7 +65,7 @@ onUnmounted(() => {
         class="w-7 h-7 transition-transform"
         :class="{ 'rotate-45': showMenu }"
       />
-      <span class="sr-only">Open actions menu</span>
+      <span class="sr-only">Открыть меню</span>
     </button>
   </div>
 </template>

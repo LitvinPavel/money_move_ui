@@ -3,6 +3,7 @@ import { onMounted } from "vue";
 import type { IAccount } from "@/models/account";
 import { useTransaction } from "@/composables/useTransaction";
 import { usePeriodStore } from "@/stores/period";
+import { useSalarySummaryStore } from "@/stores/salary-summary";
 
 export interface Props {
   account: IAccount;
@@ -11,6 +12,11 @@ export interface Props {
 const props = defineProps<Props>();
 const periodStore = usePeriodStore();
 const { balanceSummary, getBalanceSummary } = useTransaction();
+const salaryStore = useSalarySummaryStore();
+
+const planSum = computed<number>(() => {
+  return salaryStore.salarySummary?.total ? (salaryStore.salarySummary?.total / 100 * (props.account?.plan ?? 0)) : 0
+})
 onMounted(async () => {
   await getBalanceSummary({
     accountId: props.account.id,
@@ -30,12 +36,6 @@ onMounted(async () => {
         <h4 class="text-gray-500 dark:text-gray-400">
           {{ account.account_name }}
         </h4>
-        <div v-if="account.is_salary" class="inline-flex relative group">
-          <CashIcon class="text-blue-600 w-3 h-3" />
-          <base-tooltip direction="right" :show-mobile="true">
-            Зарплатный счет
-          </base-tooltip>
-        </div>
       </div>
       <div
         v-if="account.interest_rate"
@@ -45,25 +45,22 @@ onMounted(async () => {
       </div>
     </div>
     <span class="text-2xl font-medium text-gray-900 dark:text-gray-300"
-      >{{ balanceSummary?.totalBalance }}<i class="ml-0.5">₽</i></span
-    >
+      >{{ balanceSummary?.totalBalance }}<RubleIcon class="inline-flex w-3 h-3 ml-0.5" />
+      </span>
     <div v-if="balanceSummary?.totalDebt" class="flex justify-end mb-2">
       <span class="text-red-500 text-xs font-medium"
-        >Долг: {{ balanceSummary.totalDebt }} <i class="ml-0.5">₽</i></span
+        >Долг: {{ balanceSummary.totalDebt }}<RubleIcon class="inline-flex w-2 h-2 ml-0.5" /></span
       >
     </div>
     <div v-if="account.plan" class="mt-auto">
-      <div class="flex justify-between mb-1">
-        <span class="text-blue-600 text-xs font-medium"
-          >300.00<i class="ml-0.5">₽</i></span
-        >
+      <div class="flex justify-end mb-1">
         <span class="text-xs font-medium text-gray-900 dark:text-gray-300"
-          >{{ account.plan }}<i class="ml-0.5">₽</i></span
+          >{{ planSum.toFixed(2) }}<RubleIcon class="inline-flex w-2 h-2 ml-0.5" /></span
         >
       </div>
       <div class="w-full relative h-2 rounded bg-gray-700 overflow-hidden">
         <div
-          style="width: 65%"
+          :style="`width: ${balanceSummary?.totalBalance ? (balanceSummary?.totalBalance) / planSum * 100 : 0}%`"
           class="h-full absolute left-0 top-0 rounded bg-blue-600"
         ></div>
       </div>

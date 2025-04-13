@@ -18,18 +18,18 @@ provide("errorHandler", setError);
     class="fixed top-0 start-0 z-20 flex justify-between w-full py-2 px-4 bg-[#fafafa] dark:bg-gray-900"
   >
     <div
-      class="flex items-center px-3 font-medium text-gray-900 dark:text-gray-300 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
+      class="flex items-baseline px-3 font-medium text-gray-900 dark:text-gray-300 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
       :class="{ 'animate-pulse': balanceStore.loading }"
     >
       <span>{{
         balanceStore.loading ? "0" : balanceStore.balanceSummary?.totalBalance
       }}</span
-      ><i class="ml-0.5">₽</i>
+      ><RubleIcon class="inline-flex w-2 h-2 ml-0.5" />
       <span v-if="salaryStore.salarySummary?.total" class="mx-1">/</span>
       <span>{{
         salaryStore.salarySummary?.total.toFixed(2)
       }}</span
-      ><i class="ml-0.5">₽</i>
+      ><RubleIcon class="inline-flex w-2 h-2 ml-0.5" />
     </div>
     <ThemeToggle />
   </div>
