@@ -25,9 +25,9 @@ provide("errorHandler", setError);
         balanceStore.loading ? "0" : balanceStore.balanceSummary?.totalBalance
       }}</span
       ><RubleIcon class="inline-flex w-2 h-2 ml-0.5" />
-      <span v-if="salaryStore.salarySummary?.total" class="mx-1">/</span>
+      <span v-if="salaryStore.salarySummary?.total?.overall" class="mx-1">/</span>
       <span>{{
-        salaryStore.salarySummary?.total.toFixed(2)
+        salaryStore.salarySummary?.total?.overall.toFixed(2)
       }}</span
       ><RubleIcon class="inline-flex w-2 h-2 ml-0.5" />
     </div>

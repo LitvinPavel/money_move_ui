@@ -76,7 +76,6 @@ onMounted(() => {
         <FormFieldDate
           v-model="endDate"
           @update:model-value="handleDateChange"
-          :max-date="new Date()"
           label="Конечная дата"
         />
         <base-button @click.native="periodStore.resetToDefault"

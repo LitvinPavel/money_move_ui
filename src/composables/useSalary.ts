@@ -48,7 +48,7 @@ export function useSalary() {
   };
 
   const calculateSalary = async (
-    params: { month: string; year: string }
+    params: { startDate: Date | string; endDate: Date | string }
   ): Promise<void> => {
     try {
       const response = await api.get<ISalaryCalculationResult>(

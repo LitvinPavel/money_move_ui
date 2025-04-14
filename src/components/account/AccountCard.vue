@@ -15,7 +15,7 @@ const { balanceSummary, getBalanceSummary } = useTransaction();
 const salaryStore = useSalarySummaryStore();
 
 const planSum = computed<number>(() => {
-  return salaryStore.salarySummary?.total ? (salaryStore.salarySummary?.total / 100 * (props.account?.plan ?? 0)) : 0
+  return salaryStore.salarySummary?.total ? (salaryStore.salarySummary?.total?.overall / 100 * (props.account?.plan ?? 0)) : 0
 })
 onMounted(async () => {
   await getBalanceSummary({
