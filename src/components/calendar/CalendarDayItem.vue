@@ -28,7 +28,7 @@ const handleDayClick = () => {
 <template>
   <div
     :class="isOutsideMonth ? 'dark:text-gray-400' : 'cursor-pointer'"
-    class="relative px-3 py-2 text-gray-900 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 focus:z-10 min-h-24"
+    class="relative px-3 py-2 text-gray-900 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 focus:z-10 min-h-12 sm:min-h-24"
     @click="handleDayClick"
   >
     <time :datetime="date.toLocaleDateString('sv')" class="ml-auto">{{
