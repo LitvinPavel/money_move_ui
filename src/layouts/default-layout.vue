@@ -29,7 +29,7 @@ provide("errorHandler", setError);
       <span>{{
         salaryStore.salarySummary?.total?.overall.toFixed(2)
       }}</span
-      ><RubleIcon class="inline-flex w-2 h-2 ml-0.5" />
+      ><RubleIcon class="inline-flex w-2 h-2 ml-0.5" />₽
     </div>
     <ThemeToggle />
   </div>

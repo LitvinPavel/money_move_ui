@@ -34,22 +34,15 @@
       
       @font-face {
         font-family: 'Roboto Mono';
-        src: url('@/assets/fonts/RobotoMono-Bold.ttf') format('ttf');
+        src: url('@/assets/fonts/RobotoMono-SemiBold.ttf') format('ttf');
         font-weight: 700;
         font-style: normal;
       }
       
       @font-face {
         font-family: 'Roboto Mono';
-        src: url('@/assets/fonts/RobotoMono-ExtraBold.ttf') format('ttf');
+        src: url('@/assets/fonts/RobotoMono-Bold.ttf') format('ttf');
         font-weight: 800;
-        font-style: normal;
-      }
-      
-      @font-face {
-        font-family: 'Roboto Mono';
-        src: url('@/assets/fonts/RobotoMono-Black.ttf') format('ttf');
-        font-weight: 900;
         font-style: normal;
       }
 }
