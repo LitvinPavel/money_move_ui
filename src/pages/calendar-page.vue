@@ -3,9 +3,9 @@ import { ref } from "vue";
 import { useCalendar } from "@/composables/useCalendar";
 
 const {
-  daysInMonth,
-  getEventsForDate,
-  addEvent,
+    daysInMonth,
+    addEvent,
+    getEventsForDate
 } = useCalendar();
 
 const isEventModalOpen = ref(false);
@@ -34,7 +34,7 @@ const saveEvent = () => {
 
 <template>
   <div class="lg:flex lg:h-full lg:flex-col">
-    <CalendarHeader />
+    <CalendarHeader  />
     <div
       class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col"
     >

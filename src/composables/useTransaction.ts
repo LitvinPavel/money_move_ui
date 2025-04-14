@@ -12,13 +12,11 @@ import type {
   ITransaction,
   IGroupedTransactions,
   IBalanceSummary,
-  IBalanceQueryParams
+  IBalanceQueryParams,
 } from "@/models/transaction";
 import { useError } from "@/composables/useError";
 import { TransactionTypeEnum } from "@/models/transaction";
 import { useBalanceSummaryStore } from "@/stores/balance-summary";
-
-
 
 export function useTransaction() {
   const { showError } = useError();
@@ -28,20 +26,22 @@ export function useTransaction() {
   const loading = ref(false);
   const transactions = ref<ITransaction[]>([]);
   const balanceSummary = ref<IBalanceSummary | null>(null);
-  const selectTransactionType = ref<TransactionTypeEnum>(TransactionTypeEnum.transfer);
+  const selectTransactionType = ref<TransactionTypeEnum>(
+    TransactionTypeEnum.transfer
+  );
   const defaultCreateData: Partial<IDeposit & IWithdrawal & ITransfer> = {
     amount: 0,
-      description: '',
-      date: new Date().toISOString(),
-      is_debt: false
-    }
+    date: new Date().toISOString(),
+    is_debt: false,
+  };
 
   const transactionTypeList = [
-      { id: TransactionTypeEnum.deposit, title: "Зачисление" },
-      { id: TransactionTypeEnum.withdrawal, title: "Снятие" },
-      { id: TransactionTypeEnum.transfer, title: "Между счетами" }
-    ]
-    const formCreateData = ref<Partial<IDeposit & IWithdrawal & ITransfer>>(defaultCreateData);
+    { id: TransactionTypeEnum.deposit, title: "Зачисление" },
+    { id: TransactionTypeEnum.withdrawal, title: "Снятие" },
+    { id: TransactionTypeEnum.transfer, title: "Между счетами" },
+  ];
+  const formCreateData =
+    ref<Partial<IDeposit & IWithdrawal & ITransfer>>(defaultCreateData);
   onMounted(() => {
     getTransactions();
   });
@@ -85,9 +85,7 @@ export function useTransaction() {
     }
   };
 
-  const createDeposit = async (
-    params: IDeposit
-  ): Promise<void> => {
+  const createDeposit = async (params: IDeposit): Promise<void> => {
     try {
       const response = await api.post<ITransaction>(
         "/transactions/deposit",
@@ -102,9 +100,7 @@ export function useTransaction() {
     }
   };
 
-  const createWithdrawal = async (
-    params: IWithdrawal
-  ): Promise<void> => {
+  const createWithdrawal = async (params: IWithdrawal): Promise<void> => {
     try {
       const response = await api.post<ITransaction>(
         "/transactions/withdrawal",
@@ -119,9 +115,7 @@ export function useTransaction() {
     }
   };
 
-  const createTransfer = async (
-    params: ITransfer
-  ): Promise<void> => {
+  const createTransfer = async (params: ITransfer): Promise<void> => {
     try {
       const response = await api.post<{
         outTransaction: ITransaction;
@@ -189,29 +183,31 @@ export function useTransaction() {
   }
 
   function refreshAfteerCreate() {
-    balanceStore.updateBalanceSummary()
-    router.push({ name: "HistoryPage" })
+    balanceStore.updateBalanceSummary();
+    router.push({ name: "HistoryPage" });
   }
 
-  function groupTransactionsByDay(transactions: ITransaction[]): IGroupedTransactions {
+  function groupTransactionsByDay(
+    transactions: ITransaction[]
+  ): IGroupedTransactions {
     const grouped: IGroupedTransactions = {};
-  
+
     transactions.forEach((transaction) => {
-      const date = (transaction.date as unknown as string).split('T')[0];
-      
+      const date = (transaction.date as unknown as string).split("T")[0];
+
       if (!grouped[date]) {
         grouped[date] = [];
       }
-      
+
       grouped[date].push(transaction);
     });
-  
+
     for (const date in grouped) {
-      grouped[date].sort((a, b) => 
-        new Date(b.date).getTime() - new Date(a.date).getTime()
+      grouped[date].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
       );
     }
-  
+
     return grouped;
   }
 
@@ -230,6 +226,6 @@ export function useTransaction() {
     createTransfer,
     updateTransaction,
     deleteTransaction,
-    groupTransactionsByDay
+    groupTransactionsByDay,
   };
 }

@@ -45,7 +45,7 @@ onMounted(() => {
       >
         Литчные данные
       </h3>
-      <div class="flex items-center gap-4">
+      <div class="relative flex items-center gap-4">
         <ProfileIcon
           class="w-10 h-10 text-gray-200 dark:text-gray-700 flex-shrink-0"
         />
@@ -55,6 +55,9 @@ onMounted(() => {
             {{ user?.email }}
           </div>
         </div>
+        <button type="button" class="w-6 h-6 absolute right-0 text-gray-500 dark:text-gray-400">
+          <LogoutIcon />
+        </button>
       </div>
     </div>
     <div
