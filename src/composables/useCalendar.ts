@@ -10,12 +10,6 @@ export function useCalendar() {
   const currentDate = ref(new Date());
   const events = ref<CalendarEvent[]>([]);
 
-  // Вычисляемые свойства для текущего года и месяца
-  const currentYear = computed(() => currentDate.value.getFullYear());
-  const currentMonth = computed(() =>
-    currentDate.value.toLocaleString('default', { month: 'long' })
-  );
-
   // Вычисляем дни для отображения в календаре
   const daysInMonth = computed(() => {
     const year = currentDate.value.getFullYear();
@@ -67,6 +61,10 @@ export function useCalendar() {
     );
   };
 
+  const goToToday = () => {
+    currentDate.value = new Date();
+  }
+
   // Функция для выбора дня
   const selectDay = (date: Date) => {
     console.log('Selected date:', date.toLocaleDateString());
@@ -88,11 +86,11 @@ export function useCalendar() {
   };
 
   return {
-    currentYear,
-    currentMonth,
+    currentDate,
     daysInMonth,
     prevMonth,
     nextMonth,
+    goToToday,
     selectDay,
     addEvent,
     getEventsForDate,

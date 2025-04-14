@@ -8,7 +8,7 @@ interface CalendarEvent {
 export interface Props {
   date: Date;
   isOutsideMonth: boolean;
-  events: CalendarEvent[];
+  events?: CalendarEvent[];
 }
 
 export type Emits = {
@@ -27,13 +27,15 @@ const handleDayClick = () => {
 
 <template>
   <div
-    :class="isOutsideMonth ? 'text-gray-500' : 'cursor-pointer'"
-    class="relative px-3 py-2 bg-gray-50 hover:bg-gray-100 focus:z-10"
+    :class="isOutsideMonth ? 'dark:text-gray-400' : 'cursor-pointer'"
+    class="relative px-3 py-2 text-gray-900 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 focus:z-10 min-h-24"
     @click="handleDayClick"
   >
-    <time datetime="2021-12-28" class="ml-auto">{{ date.getDate() }}</time>
+    <time :datetime="date.toLocaleDateString('sv')" class="ml-auto">{{
+      date.getDate()
+    }}</time>
 
-    <template v-if="events.length">
+    <template v-if="events && events.length">
       <ol class="hidden lg:block mt-2">
         <li v-for="event in events" :key="event.id">
           <a href="#" class="group flex">
@@ -50,7 +52,7 @@ const handleDayClick = () => {
           </a>
         </li>
       </ol>
-      <span class="lg:hidden sr-only">0 events</span>
+      <span class="lg:hidden sr-only">0 событий</span>
       <span class="lg:hidden -mx-0.5 mt-auto flex flex-wrap-reverse">
         <span
           v-for="event in events"
@@ -59,7 +61,7 @@ const handleDayClick = () => {
         ></span>
       </span>
     </template>
-</div>
+  </div>
 </template>
 
 <style scoped></style>

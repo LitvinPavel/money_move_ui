@@ -1,39 +1,14 @@
+<script setup lang="ts">
+  const weekDays: string[] = [ "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс" ];
+</script>
+
 <template>
-    <div class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
-      <div class="flex justify-center bg-white py-2">
-        <span>M</span>
-        <span class="sr-only sm:not-sr-only">on</span>
-      </div>
-      <div class="flex justify-center bg-white py-2">
-        <span>T</span>
-        <span class="sr-only sm:not-sr-only">ue</span>
-      </div>
-      <div class="flex justify-center bg-white py-2">
-        <span>W</span>
-        <span class="sr-only sm:not-sr-only">ed</span>
-      </div>
-      <div class="flex justify-center bg-white py-2">
-        <span>T</span>
-        <span class="sr-only sm:not-sr-only">hu</span>
-      </div>
-      <div class="flex justify-center bg-white py-2">
-        <span>F</span>
-        <span class="sr-only sm:not-sr-only">ri</span>
-      </div>
-      <div class="flex justify-center bg-white py-2">
-        <span>S</span>
-        <span class="sr-only sm:not-sr-only">at</span>
-      </div>
-      <div class="flex justify-center bg-white py-2">
-        <span>S</span>
-        <span class="sr-only sm:not-sr-only">un</span>
+    <div class="grid grid-cols-7 gap-px border-b border-gray-900 text-center text-xs font-semibold leading-6 lg:flex-none rounded-t-lg overflow-hidden">
+      <div v-for="day in weekDays" :key="day" class="flex justify-center text-gray-900 dark:text-gray-300 bg-white dark:bg-gray-800 py-2">
+        {{ day }}
       </div>
     </div>
 </template>
-
-<script setup lang="ts">
-
-</script>
 
 <style scoped>
 
