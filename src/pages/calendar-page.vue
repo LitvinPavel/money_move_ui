@@ -7,7 +7,6 @@ const {
     prevMonth,
     nextMonth,
     goToToday,
-    selectDay,
 } = useCalendar();
 
 // const isEventModalOpen = ref(false);
