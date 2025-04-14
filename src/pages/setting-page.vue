@@ -3,7 +3,7 @@ import { ref, watch, onMounted } from "vue";
 import { usePeriodStore } from "@/stores/period";
 import { useAuth } from "@/composables/useAuth";
 
-const { user, loading, userProfile } = useAuth();
+const { user, loading, userProfile, logout } = useAuth();
 
 const periodStore = usePeriodStore();
 
@@ -55,7 +55,7 @@ onMounted(() => {
             {{ user?.email }}
           </div>
         </div>
-        <button type="button" class="w-6 h-6 absolute right-0 text-gray-500 dark:text-gray-400">
+        <button type="button" class="w-6 h-6 absolute right-0 text-gray-500 dark:text-gray-400" @click="logout">
           <LogoutIcon />
         </button>
       </div>

@@ -31,9 +31,9 @@ export function useAuth() {
 
   const login = async (credentials: { email: string, password: string }) => {
     try {
-      const response = await api.post<IUser>('/auth/login', credentials);
-      console.log(response)
-      // router.push({ name: 'WalletPage' });
+      await api.post<IUser>('/auth/login', credentials);
+
+      router.push({ name: 'WalletPage' });
     } catch (err) {
       showError(catchHandler(err, "Ошибка авторизации"));
     } finally {
