@@ -9,3 +9,13 @@ export interface IUser {
   name: string;
   email: string;
 }
+
+export interface ITokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface IAuthResponse {
+  user: IUser;
+  tokens: ITokens;
+}

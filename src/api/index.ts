@@ -1,4 +1,6 @@
-import axios , { isAxiosError } from 'axios';
+import axios, { AxiosError, isAxiosError } from 'axios';
+import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { useAuth } from '@/composables/useAuth';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api',
@@ -6,38 +8,59 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true
 });
 
-api.interceptors.response.use(
-  response => response,
-  async error => {
-    const originalRequest = error.config;
-    if (error.response.data.error === 'Refresh token required') {
-      window.location.href = '/sign-in';
-      return Promise.reject(error.response.data.error);
+// Request interceptor
+api.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    
-    if (error.response?.status === 401) {
-      try {
-        // Пытаемся обновить токены
-        await api.post('/auth/refresh');
-        
-        // Повторяем оригинальный запрос
-        return api(originalRequest);
-      } catch (refreshError) {
-        // Очищаем куки и перенаправляем на логин
-        console.log("refreshError")
-        window.location.href = '/sign-in';
-        return Promise.reject(refreshError);
-      }
-    }
-    
+    return config;
+  },
+  (error: AxiosError) => {
     return Promise.reject(error);
   }
 );
 
-export {
-    api,
-    isAxiosError
-};
+// Response interceptor
+api.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  async (error: AxiosError) => {
+    const originalRequest = error.config;
+    
+    // Проверяем, что это не запрос на обновление токена и нет флага _retry
+    if (error.response?.status === 401 && 
+        originalRequest?.url !== '/auth/refresh' && 
+        !originalRequest?._retry) {
+      const { refreshTokens, clearTokens, getAccessToken } = useAuth();
+      try {
+        // Помечаем запрос как повторный
+        if (originalRequest) {
+          originalRequest._retry = true;
+        }
+
+        
+        const success = await refreshTokens();
+        
+        if (success && originalRequest) {
+          const token = getAccessToken();
+          if (token) {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+          }
+          return api(originalRequest);
+        }
+      } catch (refreshError) {
+        console.error('Token refresh failed:', refreshError);
+      }
+      clearTokens();
+      // Перенаправляем на страницу входа при неудаче
+      window.location.href = '/sign-in';
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+export { api, isAxiosError };
