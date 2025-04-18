@@ -13,16 +13,18 @@ const username = ref<string>('');
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-    <h2
-      class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900"
+  <div
+    class="relative p-4 m-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 sm:mx-auto sm:w-full sm:h-full sm:max-w-sm"
+  >
+    <h1
+      class="absolute top-0 -mt-3 -ml-1 bg-gray-100 dark:bg-gray-900 px-2 z-10 text-gray-500 dark:text-gray-400 text-sm"
     >
       Авторизация
-    </h2>
+    </h1>
 
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div class="mt-5">
       <form class="space-y-6" @submit.prevent="handleLogin">
-        <FormFieldInput v-model="username" id="login" label="Логин" autocomplete="nickname" required />
+        <FormFieldInput v-model="username" id="email" label="Почта" type="email" required />
         <FormFieldInput v-model="password" id="password" label="Пароль" type="password" autocomplete="current-password" required />
         <base-button type="submit" :disabled="loading"> Войти </base-button>
       </form>

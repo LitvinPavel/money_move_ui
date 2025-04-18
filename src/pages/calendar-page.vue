@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useCalendar } from "@/composables/useCalendar";
+import { useTransaction } from "@/composables/useTransaction";
 
 const {
   currentDate,
@@ -9,28 +10,20 @@ const {
     goToToday,
 } = useCalendar();
 
-// const isEventModalOpen = ref(false);
-// const selectedDate = ref<string | null>(null);
-// const newEventTitle = ref("");
+const { transactions, getTransactions, groupTransactionsByDay, deleteTransaction } =
+  useTransaction();
 
-// const openEventModal = (date: Date) => {
-//   if (!date) return;
-//   selectedDate.value = date.toLocaleDateString("sv"); // Формат YYYY-MM-DD
-//   isEventModalOpen.value = true;
-// };
+watch(currentDate, (date: Date) => {
+  const year = date.getFullYear();
+    const month = date.getMonth();
+    const startDate = new Date(year, month, 1).toLocaleDateString("sv");
+    const endDate = new Date(year, month + 1, 0).toLocaleDateString("sv");
+    getTransactions({ startDate, endDate })
+}, { immediate: true });
 
-// const closeEventModal = () => {
-//   isEventModalOpen.value = false;
-//   selectedDate.value = null;
-//   newEventTitle.value = "";
-// };
-
-// const saveEvent = () => {
-//   if (selectedDate.value && newEventTitle.value.trim()) {
-//     addEvent(selectedDate.value, newEventTitle.value.trim());
-//     closeEventModal();
-//   }
-// };
+const groupTransaction = computed(() => {
+  return groupTransactionsByDay(transactions.value);
+})
 </script>
 
 <template>
@@ -38,7 +31,7 @@ const {
     class="relative p-4 m-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
   >
     <h3
-      class="absolute top-0 -mt-3 -ml-1 bg-[#fafafa] dark:bg-gray-900 px-2 z-10 text-gray-500 dark:text-gray-400 text-sm"
+      class="absolute top-0 -mt-3 -ml-1 bg-gray-100 dark:bg-gray-900 px-2 z-10 text-gray-500 dark:text-gray-400 text-sm"
     >
       Календарь
     </h3>
@@ -57,19 +50,11 @@ const {
             :key="index"
             :date="day.date"
             :is-outside-month="day.isOutsideMonth"
+            :transactions="groupTransaction[day.date.toLocaleDateString('sv')]"
           />
         </div>
       </div>
     </div>
-    <!-- <base-modal v-model:visible="isEventModalOpen">
-      <form class="space-y-4 mt-8" @submit.prevent="saveEvent">
-        <FormFieldInput v-model="newEventTitle" id="eventTitle" label="Название события" required />
-        <button
-          type="submit"
-          class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >Добавить</button>
-        </form>
-    </base-modal> -->
   </div>
 </div>
 </template>

@@ -14,24 +14,24 @@ export function useAuth() {
 
   // Сохраняем токены в localStorage
   const setTokens = (tokens: { accessToken: string; refreshToken: string }) => {
-    localStorage.setItem('accessToken', tokens.accessToken);
-    localStorage.setItem('refreshToken', tokens.refreshToken);
+    localStorage.setItem('mm_accessToken', tokens.accessToken);
+    localStorage.setItem('mm_refreshToken', tokens.refreshToken);
   };
 
   // Удаляем токены
   const clearTokens = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('mm_accessToken');
+    localStorage.removeItem('mm_refreshToken');
   };
 
   // Получаем accessToken
   const getAccessToken = (): string | null => {
-    return localStorage.getItem('accessToken');
+    return localStorage.getItem('mm_accessToken');
   };
 
   // Получаем refreshToken
   const getRefreshToken = (): string | null => {
-    return localStorage.getItem('refreshToken');
+    return localStorage.getItem('mm_refreshToken');
   };
 
   const register = async (data: IUserCreate) => {

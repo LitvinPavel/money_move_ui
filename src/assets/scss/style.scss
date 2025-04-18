@@ -4,7 +4,7 @@
 // @use '../fonts/fonts.css';
 
 body {
-    @apply bg-[#fafafa] dark:bg-gray-900 font-mono;
+    @apply bg-gray-100 dark:bg-gray-900 font-mono;
 
     &:has(.backdrop) {
         @apply overflow-hidden md:overflow-auto;

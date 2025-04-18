@@ -7,9 +7,9 @@ interface CalendarEvent {
 }
 
 export function useCalendar() {
-  const currentDate = ref(new Date());
+  const currentDate = ref<Date>(new Date());
   const events = ref<CalendarEvent[]>([]);
-
+  
   // Вычисляем дни для отображения в календаре
   const daysInMonth = computed(() => {
     const year = currentDate.value.getFullYear();

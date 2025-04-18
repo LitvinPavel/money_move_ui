@@ -13,7 +13,7 @@ function onSubmit(): void {
 </script>
 <template>
   <div class="relative p-4 m-4 max-w-3xl md:mx-auto border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-    <h3 class="absolute top-0 -mt-3 -ml-1 bg-[#fafafa] dark:bg-gray-900 px-2 z-10 text-gray-500 dark:text-gray-400 text-sm">Создание аккаунта</h3>
+    <h3 class="absolute top-0 -mt-3 -ml-1 bg-gray-100 dark:bg-gray-900 px-2 z-10 text-gray-500 dark:text-gray-400 text-sm">Создание аккаунта</h3>
     <form class="space-y-4" @submit.prevent="onSubmit">
       <BankSelect v-model="formCreateData.bank_bic" />
       <FormFieldInput

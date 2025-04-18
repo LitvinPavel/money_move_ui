@@ -18,9 +18,8 @@ defineProps<Props>();
     :class="{
       'right-full mr-2': direction === 'right',
       'bottom-full mb-2': direction === 'bottom',
-      'hidden md:block': !showMobile
     }"
-    class="absolute z-20 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs dark:bg-gray-700 opacity-0 group-hover:opacity-100"
+    class="hidden lg:inline-block absolute z-20 px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs dark:bg-gray-700 opacity-0 group-hover:opacity-100"
     role="tooltip"
   >
     <slot />

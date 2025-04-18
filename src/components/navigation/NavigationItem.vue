@@ -15,7 +15,7 @@ defineProps<Props>();
     class="flex items-center justify-center w-full h-full"
   >
     <button
-      class="inline-flex items-center justify-center group h-full w-full flex-col px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+      class="inline-flex items-center justify-center group h-full w-full flex-col px-5 lg:hover:bg-gray-50 lg:dark:hover:bg-gray-800"
       :class="{
         'rounded-e-full': isLast,
         'rounded-s-full': isFirst,

@@ -1,4 +1,4 @@
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { api } from "@/api";
 import catchHandler from "@/utils/catch-handler";
@@ -42,9 +42,6 @@ export function useTransaction() {
   ];
   const formCreateData =
     ref<Partial<IDeposit & IWithdrawal & ITransfer>>(defaultCreateData);
-  onMounted(() => {
-    getTransactions();
-  });
 
   const getTransactions = async (
     params?: ITransactionOptions

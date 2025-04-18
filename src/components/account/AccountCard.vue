@@ -45,18 +45,25 @@ onMounted(async () => {
       </div>
     </div>
     <span class="text-2xl font-medium text-gray-900 dark:text-gray-300"
-      >{{ balanceSummary?.totalBalance }}<RubleIcon class="inline-flex w-3 h-3 ml-0.5" />
+      >{{ balanceSummary?.totalBalance }}<RubleIcon class="inline-flex w-3 h-3 ml-0.5 -mt-0.5" />
       </span>
     <div v-if="balanceSummary?.totalDebt" class="flex justify-end mb-2">
       <span class="text-red-500 text-xs font-medium"
-        >Долг: {{ balanceSummary.totalDebt }}<RubleIcon class="inline-flex w-2 h-2 ml-0.5" /></span
+        >Долг: {{ balanceSummary.totalDebt }}<RubleIcon class="inline-flex w-2 h-2 ml-0.5 -mt-0.5" /></span
       >
     </div>
     <div v-if="account.plan" class="mt-auto">
-      <div class="flex justify-end mb-1">
-        <span class="text-xs font-medium text-gray-900 dark:text-gray-300"
-          >{{ planSum.toFixed(2) }}<RubleIcon class="inline-flex w-2 h-2 ml-0.5" /></span
-        >
+      <div class="flex justify-end mb-1 font-normal text-xs text-gray-900 dark:text-gray-300">
+        <!-- <span>
+          <span>{{ planSum.toFixed(2) }}</span>
+          <RubleIcon class="inline-flex w-2 h-2 ml-0.5" />
+        </span>
+        <span>/</span> -->
+        <span :class="{ 'text-red-300': planSum < (balanceSummary?.totalBalance || 0) }">
+          <span class="mr-1">{{ planSum < (balanceSummary?.totalBalance || 0) ? 'Превысило': 'Осталось' }}</span>
+          <span class="font-bold">{{ Math.abs(planSum - (balanceSummary?.totalBalance || 0)).toFixed(2) }}</span>
+          <RubleIcon class="inline-flex w-2 h-2 ml-0.5 -mt-0.5" />
+        </span>
       </div>
       <div class="w-full relative h-2 rounded bg-gray-700 overflow-hidden">
         <div

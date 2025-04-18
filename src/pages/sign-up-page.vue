@@ -29,22 +29,25 @@ const username = ref<string>('');
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-    <h2
-      class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900"
+  <div
+    class="relative p-4 m-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 sm:mx-auto sm:w-full sm:h-full sm:max-w-sm"
+  >
+    <h1
+      class="absolute top-0 -mt-3 -ml-1 bg-gray-100 dark:bg-gray-900 px-2 z-10 text-gray-500 dark:text-gray-400 text-sm"
     >
       Регистрация
-    </h2>
+    </h1>
 
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div class="mt-5">
+      <p v-if="passwordMismatch" class="absolute top-2 text-red-400">Пароли не совпадают</p>
       <form class="space-y-6" @submit.prevent="handleRegister">
-        <FormFieldInput v-model="username" id="login" label="Логин" autocomplete="nickname" required />
-        <FormFieldInput v-model="username" id="email" label="Email" autocomplete="email" required />
+        <FormFieldInput v-model="username" id="name" label="Имя" autocomplete="nickname" required />
+        <FormFieldInput v-model="username" id="email" label="Почта" autocomplete="email" required />
         <FormFieldInput v-model="password" id="password" label="Пароль" type="password" required />
         <FormFieldInput v-model="confirmPassword" id="confirmPassword" label="Подтвердите пароль" type="password" required />
 
         <base-button type="submit" :disabled="loading  || !isFormValid"> {{ loading ? 'Регистрация...' : 'Зарегистрироваться' }} </base-button>
-        <p v-if="passwordMismatch" class="text-red-400">Пароли не совпадают</p>
+        
       </form>
       <p class="mt-10 text-center text-sm/6 text-gray-500">
         Уже зарегистрированы?
