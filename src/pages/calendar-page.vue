@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { watch, computed } from "vue"
 import { useCalendar } from "@/composables/useCalendar";
 import { useTransaction } from "@/composables/useTransaction";
 
@@ -10,7 +11,7 @@ const {
     goToToday,
 } = useCalendar();
 
-const { transactions, getTransactions, groupTransactionsByDay, deleteTransaction } =
+const { transactions, getTransactions, groupTransactionsByDay } =
   useTransaction();
 
 watch(currentDate, (date: Date) => {
