@@ -58,7 +58,7 @@ export function useTransaction() {
       });
       transactions.value = response.data.transactions || [];
     } catch (err) {
-      showError(catchHandler(err, "Ошибка получения истории транзакций"));
+      console.log(catchHandler(err, "Ошибка получения истории транзакций"));
     } finally {
       loading.value = false;
     }
@@ -76,7 +76,7 @@ export function useTransaction() {
       });
       balanceSummary.value = response.data || null;
     } catch (err) {
-      showError(catchHandler(err, "Ошибка получения баланса за период"));
+      console.log(catchHandler(err, "Ошибка получения баланса за период"));
     } finally {
       loading.value = false;
     }

@@ -24,11 +24,6 @@ const router = createRouter({
           component: () => import("@/pages/history-page.vue"),
         },
         {
-          path: "profile",
-          name: "ProfilePage",
-          component: () => import("@/pages/profile-page.vue"),
-        },
-        {
           path: "setting",
           name: "SettingPage",
           component: () => import("@/pages/setting-page.vue"),

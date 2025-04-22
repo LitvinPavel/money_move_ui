@@ -36,15 +36,8 @@ onMounted(() => {
 </script>
 <template>
   <BaseLoader v-if="loading" />
-  <div v-else class="space-y-6">
-    <div
-      class="relative p-4 m-4 max-w-3xl md:mx-auto border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
-    >
-      <h3
-        class="absolute top-0 -mt-3 -ml-1 bg-gray-100 dark:bg-gray-900 px-2 z-10 text-gray-500 dark:text-gray-400 text-sm"
-      >
-        Литчные данные
-      </h3>
+  <div v-else class="space-y-6 max-w-2xl mx-auto">
+    <base-wrapper headline="Личные данные" tag="h2">
       <div class="relative flex items-center gap-4">
         <ProfileIcon
           class="w-10 h-10 text-gray-200 dark:text-gray-700 flex-shrink-0"
@@ -55,19 +48,16 @@ onMounted(() => {
             {{ user?.email }}
           </div>
         </div>
-        <button type="button" class="w-6 h-6 absolute right-0 text-gray-500 dark:text-gray-400" @click="logout">
+        <button
+          type="button"
+          class="w-6 h-6 absolute right-0 text-gray-500 dark:text-gray-400"
+          @click="logout"
+        >
           <LogoutIcon />
         </button>
       </div>
-    </div>
-    <div
-      class="relative p-4 m-4 max-w-3xl md:mx-auto border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
-    >
-      <h3
-        class="absolute top-0 -mt-3 -ml-1 bg-gray-100 dark:bg-gray-900 px-2 z-10 text-gray-500 dark:text-gray-400 text-sm"
-      >
-        Отчетный период
-      </h3>
+    </base-wrapper>
+    <base-wrapper headline="Отчетный период" tag="h2">
       <form class="space-y-4" @submit.prevent>
         <FormFieldDate
           v-model="startDate"
@@ -85,7 +75,7 @@ onMounted(() => {
           >Сбросить до текущего месяца</base-button
         >
       </form>
-    </div>
+    </base-wrapper>
   </div>
 </template>
 <style></style>

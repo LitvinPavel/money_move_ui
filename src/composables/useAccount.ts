@@ -45,7 +45,7 @@ export function useAccount() {
       const response = await api.get<IAccount[]>("/accounts", { params });
       accounts.value = response.data || [];
     } catch (err) {
-      showError(catchHandler(err, "Ошибка получения аккаунтов"));
+      console.log(catchHandler(err, "Ошибка получения аккаунтов"))
     } finally {
       loading.value = false;
     }

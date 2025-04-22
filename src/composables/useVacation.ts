@@ -1,7 +1,7 @@
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { api } from "@/api";
 import catchHandler from "@/utils/catch-handler";
-import type { IVacation } from "@/models/vacation";
+import type { IVacation, IVacationQueryParams } from "@/models/vacation";
 
 import { useError } from "@/composables/useError";
 
@@ -11,19 +11,21 @@ export function useVacation() {
   const loading = ref(false);
   const vacations = ref<IVacation[]>([]);
 
-  onMounted(() => {
-    getVacations();
-  });
+  // onMounted(() => {
+  //   getVacations();
+  // });
 
-  const getVacations = async (): Promise<void> => {
+  const getVacations = async (params?: IVacationQueryParams): Promise<void> => {
     loading.value = true;
     error.value = null;
 
     try {
-      const response = await api.get<IVacation[]>("/salary/vacations");
+      const response = await api.get<IVacation[]>("/salary/vacations", {
+        params,
+      });
       vacations.value = response.data || [];
     } catch (err) {
-      showError(catchHandler(err, "Ошибка получения отпусков"));
+      console.log(catchHandler(err, "Ошибка получения отпусков"));
     } finally {
       loading.value = false;
     }
@@ -68,6 +70,8 @@ export function useVacation() {
 
   return {
     loading,
+    vacations,
+    getVacations,
     createVacation,
     deleteVacation,
     refresh,

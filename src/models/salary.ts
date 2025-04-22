@@ -7,6 +7,28 @@ export interface ISalary {
 }
 
 export interface ISalaryCalculationResult {
+  advance: {
+    amount: number;
+    paymentDate: Date;
+    hours: number;
+    hourlyRate: number;
+  };
+  salary: {
+    amount: number;
+    paymentDate: Date;
+    hours: number;
+    hourlyRate: number;
+  };
+  vacationPay?: {
+    amount: number;
+    days: number;
+    averageHourlyRate: number;
+    paymentDate: Date;
+  };
+  total: number;
+}
+
+export interface ISalaryPeriodCalculationResult {
   periodStart: Date;
   periodEnd: Date;
   calculations: ISalaryCalculationResult[];

@@ -8,7 +8,7 @@ export function useLazyload(_loadMore: () => Promise<void>) {
 
     const { scrollTop, scrollHeight, clientHeight } = selectElement.value;
     const isNearBottom = scrollTop + clientHeight >= scrollHeight - 50;
-    console.log(isNearBottom)
+
     if (isNearBottom) {
       _loadMore();
     }

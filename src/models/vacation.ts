@@ -5,3 +5,8 @@ export interface IVacation {
   end_date: Date;
   createdAt: Date;
 }
+
+export interface IVacationQueryParams {
+  startDate?: string;
+  endDate?: string;
+}

@@ -1,7 +1,7 @@
 import { ref, onMounted } from "vue";
 import { api } from "@/api";
 import catchHandler from "@/utils/catch-handler";
-import type { ISalaryCalculationResult, ISalary } from "@/models/salary";
+import type { ISalaryPeriodCalculationResult, ISalary } from "@/models/salary";
 
 import { useError } from "@/composables/useError";
 
@@ -10,7 +10,7 @@ export function useSalary() {
   const error = ref<string | null>(null);
   const loading = ref(false);
   const salaryHistory = ref<ISalary[]>([]);
-  const salaryCalculation = ref<ISalaryCalculationResult | null>(null);
+  const salaryCalculation = ref<ISalaryPeriodCalculationResult | null>(null);
 
   onMounted(() => {
     getSalaryHistory();
@@ -24,9 +24,7 @@ export function useSalary() {
       const response = await api.get<ISalary[]>("/salary/history");
       salaryHistory.value = response.data || [];
     } catch (err) {
-      showError(
-        catchHandler(err, "Ошибка получения истории изменения зарплаты")
-      );
+      console.log(catchHandler(err, "Ошибка получения истории изменения зарплаты"))
     } finally {
       loading.value = false;
     }
@@ -51,13 +49,13 @@ export function useSalary() {
     params: { startDate: Date | string; endDate: Date | string }
   ): Promise<void> => {
     try {
-      const response = await api.get<ISalaryCalculationResult>(
+      const response = await api.get<ISalaryPeriodCalculationResult>(
         `/salary/calculate`,
         { params }
       );
       if (response.data) salaryCalculation.value = response.data;
     } catch (err) {
-      showError(catchHandler(err, "Ошибка получения рассчета зарплаты"));
+      console.log(catchHandler(err, "Ошибка получения рассчета зарплаты"));
     } finally {
       loading.value = false;
     }
@@ -69,6 +67,8 @@ export function useSalary() {
 
   return {
     loading,
+    salaryHistory,
+    salaryCalculation,
     setSalary,
     calculateSalary,
     refresh,

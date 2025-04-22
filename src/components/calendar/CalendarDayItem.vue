@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import type {
-  ITransaction,
-} from "@/models/transaction";
+import type { ITransaction } from "@/models/transaction";
 interface CalendarEvent {
   id: string;
   title: string;
@@ -12,7 +10,12 @@ export interface Props {
   date: Date;
   isOutsideMonth: boolean;
   events?: CalendarEvent[];
-  transactions?: ITransaction[]
+  transactions?: ITransaction[];
+  isVacation: boolean;
+  payDay: {
+    type: "salary" | "advance" | "vacationPay";
+    amount?: number;
+  } | null;
 }
 
 export type Emits = {
@@ -21,6 +24,15 @@ export type Emits = {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+
+const payDayClasses = computed(() => {
+  if (props.payDay?.type === "salary") return "bg-green-800 hover:bg-green-900";
+  if (props.payDay?.type === "advance")
+    return "bg-yellow-800 hover:bg-yellow-900";
+  if (props.payDay?.type === "vacationPay")
+    return "bg-indigo-800 hover:bg-indigo-900";
+  return "bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700";
+});
 
 const handleDayClick = () => {
   if (!props.isOutsideMonth) {
@@ -31,13 +43,23 @@ const handleDayClick = () => {
 
 <template>
   <div
-    :class="isOutsideMonth ? 'text-gray-400 dark:text-gray-400' : 'text-gray-900 dark:text-gray-300'"
-    class="relative px-3 py-2 cursor-pointer bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 focus:z-10 min-h-12 sm:min-h-24"
+    :class="[
+      isOutsideMonth
+        ? 'text-gray-400 dark:text-gray-400'
+        : 'text-gray-900 dark:text-gray-300',
+      { 'bg-blue-800 hover:bg-blue-900': isVacation },
+      payDayClasses,
+    ]"
+    class="relative px-3 py-2 cursor-pointer focus:z-10 min-h-12 sm:min-h-24"
     @click="handleDayClick"
   >
     <time :datetime="date.toLocaleDateString('sv')" class="ml-auto">{{
       date.getDate()
     }}</time>
+    <div v-if="payDay?.amount">
+      {{ payDay.amount.toFixed(2)
+      }}<RubleIcon class="inline-flex w-2 h-2 ml-0.5" />
+    </div>
     <template v-if="transactions && transactions.length">
       <ol class="hidden lg:block mt-2">
         <li v-for="event in transactions" :key="event.id">

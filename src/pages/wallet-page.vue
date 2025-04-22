@@ -8,11 +8,12 @@ enum AccountTypeEnum {
   credit = "credit",
 }
 
-const { accounts } = useAccount();
+const { accounts, loading } = useAccount();
 
 </script>
 <template>
-  <div class="p-4 space-y-6">
+  <BaseLoader v-if="loading" />
+  <div v-else class="p-4 space-y-6">
     <base-card-wrapper headline="Зарплата">
       <AccountCard
         v-for="account in accounts.filter(

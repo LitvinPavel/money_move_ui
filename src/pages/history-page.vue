@@ -3,8 +3,13 @@ import { onMounted } from "vue";
 import { useTransaction } from "@/composables/useTransaction";
 import { TransactionTypeInputEnum } from "@/models/transaction";
 
-const { transactions, getTransactions, groupTransactionsByDay, deleteTransaction } =
-  useTransaction();
+const {
+  loading,
+  transactions,
+  getTransactions,
+  groupTransactionsByDay,
+  deleteTransaction,
+} = useTransaction();
 
 onMounted(() => {
   getTransactions();
@@ -12,17 +17,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    class="relative p-4 m-4 max-w-3xl md:mx-auto border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
-  >
-    <h3
-      class="absolute top-0 -mt-3 -ml-1 bg-gray-100 dark:bg-gray-900 px-2 z-10 text-gray-500 dark:text-gray-400 text-sm"
-    >
-      История транзакций
-    </h3>
-    <!-- <div class="pb-4">
-      <DropdownMenu />
-    </div> -->
+  <BaseLoader v-if="loading" />
+  <base-wrapper v-else headline="История транзакций">
     <div
       v-for="(values, key) in groupTransactionsByDay(transactions)"
       :key="key"
@@ -49,7 +45,9 @@ onMounted(() => {
               class="flex gap-2 items-center text-blue-800 dark:text-blue-300"
             >
               <span class="text-xs lg:text-sm">
-                <span class="hidden sm:inline">{{ transaction.bank_name }}/</span>
+                <span class="hidden sm:inline"
+                  >{{ transaction.bank_name }}/</span
+                >
                 <span>{{ transaction.account_name }}</span>
               </span>
               <div
@@ -69,17 +67,22 @@ onMounted(() => {
                 />
               </div>
               <span
-                v-if="transaction.type === TransactionTypeInputEnum.transfer_out"
+                v-if="
+                  transaction.type === TransactionTypeInputEnum.transfer_out
+                "
                 class="text-xs lg:text-sm"
               >
-                <span class="hidden sm:inline">{{ transaction.related_bank_name }}/</span>
+                <span class="hidden sm:inline"
+                  >{{ transaction.related_bank_name }}/</span
+                >
                 <span>{{ transaction.related_account_name }}</span>
               </span>
             </div>
             <span
               class="mb-1 font-medium text-2xl text-gray-900 dark:text-gray-100"
             >
-              {{ transaction.amount.toFixed(2) }}<RubleIcon class="inline-flex w-3 h-3 ml-0.5" />
+              {{ transaction.amount.toFixed(2)
+              }}<RubleIcon class="inline-flex w-3 h-3 ml-0.5" />
             </span>
             <p class="text-gray-600 dark:text-gray-400">
               {{ transaction.description }}
@@ -92,12 +95,15 @@ onMounted(() => {
               Долг
             </span>
           </div>
-          <button @click="deleteTransaction(transaction.id)" class="text-red-600 -m-4 p-4">
+          <button
+            @click="deleteTransaction(transaction.id)"
+            class="text-red-600 -m-4 p-4"
+          >
             <TrashIcon class="w-5 h-5" />
           </button>
         </li>
       </ol>
     </div>
-  </div>
+  </base-wrapper>
 </template>
 <style></style>

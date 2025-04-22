@@ -86,7 +86,7 @@ export function useAuth() {
       user.value = response.data;
       return user.value;
     } catch (err) {
-      showError(catchHandler(err, "Ошибка получения данных пользователя"));
+      console.log(catchHandler(err, "Ошибка получения данных пользователя"))
       throw err;
     } finally {
       loading.value = false;
