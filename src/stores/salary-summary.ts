@@ -3,13 +3,13 @@ import { defineStore } from "pinia";
 import { usePeriodStore } from "./period";
 import { api } from "@/api";
 import catchHandler from "@/utils/catch-handler";
-import type { ISalaryCalculationResult } from "@/models/salary";
+import type { ISalaryPeriodCalculationResult } from "@/models/salary";
 
 export const useSalarySummaryStore = defineStore("salarySummary", () => {
   const periodStore = usePeriodStore();
 
   // State
-  const salarySummary = ref<ISalaryCalculationResult | null>(null);
+  const salarySummary = ref<ISalaryPeriodCalculationResult | null>(null);
   const error = ref<string | null>(null);
   const loading = ref(false);
 
@@ -26,7 +26,7 @@ export const useSalarySummaryStore = defineStore("salarySummary", () => {
         throw new Error("Не выбран период для расчёта");
       }
 
-      const response = await api.get<ISalaryCalculationResult>(
+      const response = await api.get<ISalaryPeriodCalculationResult>(
         `/salary/calculate`,
         { params: { startDate: periodStore.startDate, endDate: periodStore.endDate } }
       );
