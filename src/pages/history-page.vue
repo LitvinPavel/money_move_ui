@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useTransaction } from "@/composables/useTransaction";
-import { TransactionTypeInputEnum } from "@/models/transaction";
 
 const {
   loading,
