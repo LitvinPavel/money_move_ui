@@ -9,6 +9,8 @@ interface CalendarEvent {
 export function useCalendar() {
   const currentDate = ref<Date>(new Date());
   const events = ref<CalendarEvent[]>([]);
+  const selectedDay = ref<Date>(new Date());
+  const showDetails = ref<boolean>(false);
   
   // Вычисляем дни для отображения в календаре
   const daysInMonth = computed(() => {
@@ -86,6 +88,8 @@ export function useCalendar() {
   };
 
   return {
+    selectedDay,
+    showDetails,
     currentDate,
     daysInMonth,
     prevMonth,

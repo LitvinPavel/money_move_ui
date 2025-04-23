@@ -5,8 +5,15 @@ import { useTransaction } from "@/composables/useTransaction";
 import { useVacation } from "@/composables/useVacation";
 import { useSalary } from "@/composables/useSalary";
 
-const { currentDate, daysInMonth, prevMonth, nextMonth, goToToday } =
-  useCalendar();
+const {
+  selectedDay,
+  showDetails,
+  currentDate,
+  daysInMonth,
+  prevMonth,
+  nextMonth,
+  goToToday,
+} = useCalendar();
 
 const { transactions, getTransactions, groupTransactionsByDay } =
   useTransaction();
@@ -59,12 +66,17 @@ function checkIsPayDay(date: Date): {
     ? new Date(salary.vacationPay.paymentDate).toLocaleDateString("sv")
     : null;
   if (advanceDate && currentDate === advanceDate)
-    return { type: "advance", amount: salary.advance.amount };
+    return { type: "advance", ...salary.advance };
   else if (salaryDate && currentDate === salaryDate)
-    return { type: "salary", amount: salary.salary.amount };
+    return { type: "salary", ...salary.salary };
   else if (vacationPayDate && currentDate === vacationPayDate)
-    return { type: "vacationPay", amount: salary.vacationPay?.amount };
+    return { type: "vacationPay", ...salary.vacationPay };
   else return null;
+}
+
+function showDelailsHandler(date: Date) {
+  selectedDay.value = date;
+  showDetails.value = true;
 }
 </script>
 
@@ -94,12 +106,27 @@ function checkIsPayDay(date: Date): {
                 groupTransaction[day.date.toLocaleDateString('sv')]
               "
               :is-vacation="checkIsVacation(day.date)"
-              :pay-day="checkIsPayDay(day.date)"
+              :pay-day-type="checkIsPayDay(day.date)?.type ?? null"
+              @day-click="showDelailsHandler(day.date)"
             />
           </div>
         </div>
       </div>
     </div>
+    <base-modal v-model:visible="showDetails">
+      <time class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{
+        new Date(selectedDay).toLocaleString("ru-RU", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      }}</time>
+      <CalendarDayDetails
+        :transactions="groupTransaction[selectedDay.toLocaleDateString('sv')]"
+        :is-vacation="checkIsVacation(selectedDay)"
+        :pay-day="checkIsPayDay(selectedDay)"
+      />
+    </base-modal>
   </base-wrapper>
 </template>
 

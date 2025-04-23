@@ -36,7 +36,7 @@ onMounted(() => {
 </script>
 <template>
   <BaseLoader v-if="loading" />
-  <div v-else class="space-y-6 max-w-2xl mx-auto">
+  <div v-else class="space-y-6">
     <base-wrapper headline="Личные данные" tag="h2">
       <div class="relative flex items-center gap-4">
         <ProfileIcon
