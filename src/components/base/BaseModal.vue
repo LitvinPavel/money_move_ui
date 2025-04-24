@@ -20,9 +20,9 @@ function close(): void {
 <template>
   <div
     v-if="visibleModel"
-    class="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-40 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-gray-900/90"
+    class="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-40 justify-center items-center w-full md:inset-0 h-full max-h-full bg-gray-900/90"
   >
-    <div class="relative p-4 w-full max-w-2xl max-h-full m-auto">
+    <div class="relative p-2 w-full max-w-2xl max-h-full m-auto">
       <div class="relative rounded-lg shadow-sm bg-white dark:bg-gray-800">
         <button
           type="button"

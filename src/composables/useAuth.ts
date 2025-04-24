@@ -118,6 +118,7 @@ export function useAuth() {
     userProfile, 
     logout, 
     getAccessToken,
+    getRefreshToken,
     refreshTokens,
     clearTokens,
     user, 

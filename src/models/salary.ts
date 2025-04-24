@@ -6,6 +6,11 @@ export interface ISalary {
   createdAt: Date;
 }
 
+export interface ISalaryQueryParams {
+  amount?: number;
+  effective_from?: Date;
+}
+
 export interface ISalaryCalculationResult {
   advance: {
     amount: number;

@@ -33,7 +33,7 @@ const showMenu = ref(false);
 
 const closeMenu = (): void => {
   showMenu.value = false;
-}
+};
 onUnmounted(() => {
   closeMenu();
 });
@@ -47,7 +47,8 @@ onUnmounted(() => {
         :key="index"
         :to="link"
         type="button"
-        class="group flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-xs dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600"
+        class="group flex justify-center items-center w-[52px] h-[52px] text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white bg-gray-50 dark:bg-gray-700 rounded-full shadow-lg"
+        @click="closeMenu"
       >
         <component :is="icon" class="w-6 h-6" />
         <span class="sr-only">{{ title }}</span>

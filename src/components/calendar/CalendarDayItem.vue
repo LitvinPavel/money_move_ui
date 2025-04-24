@@ -24,15 +24,15 @@ export type Emits = {
 };
 
 const payDayTypes = {
-  salary: "bg-green-800",
-  advance: "bg-yellow-800",
-  vacationPay: "bg-indigo-800",
+  salary: "bg-green-800 text-gray-100",
+  advance: "bg-yellow-800 text-gray-100",
+  vacationPay: "bg-indigo-800 text-gray-100",
 };
 
 const transactionTypes: { [key: string]: string } = {
-  [TransactionTypeInputEnum.deposit as string]: "bg-green-900",
-  [TransactionTypeInputEnum.withdrawal as string]: "bg-red-900",
-  [TransactionTypeInputEnum.transfer_out as string]: "bg-blue-900",
+  [TransactionTypeInputEnum.deposit as string]: "bg-green-900 text-gray-100",
+  [TransactionTypeInputEnum.withdrawal as string]: "bg-red-900 text-gray-100",
+  [TransactionTypeInputEnum.transfer_out as string]: "bg-blue-900 text-gray-100",
 };
 
 const props = defineProps<Props>();
@@ -42,7 +42,7 @@ const payDayClasses = computed(() => {
   return props.payDayType && props.payDayType in payDayTypes
     ? payDayTypes[props.payDayType]
     : props.date.toLocaleDateString('sv') === new Date().toLocaleDateString('sv')
-    ?  'bg-gray-600' : '';
+    ?  'bg-gray-600 text-gray-100' : '';
 });
 
 const handleDayClick = () => {
@@ -74,7 +74,7 @@ const handleDayClick = () => {
         <span
           v-for="event in transactions"
           :key="event.id"
-          class="mx-[1px] mb-0.5 h-1.5 w-1.5 rounded-full"
+          class="mx-[1px] mt-0.5 h-1.5 w-1.5 rounded-full"
           :class="transactionTypes[event.type]"
         ></span>
       </span>

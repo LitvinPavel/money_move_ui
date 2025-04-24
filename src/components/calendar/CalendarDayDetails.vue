@@ -22,11 +22,11 @@ defineProps<Props>();
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="space-y-6 -mx-4">
     <h3 v-if="isVacation" class="m-4 flex gap-2 justify-end">
       <SunIcon class="w-5 h-5 text-yellow-400" /><span
         class="text-gray-900 dark:text-gray-100"
-        >Отпуск, отдыхай!</span
+        >Отпуск</span
       >
     </h3>
     <base-wrapper

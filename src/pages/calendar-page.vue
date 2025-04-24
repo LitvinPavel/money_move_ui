@@ -114,7 +114,7 @@ function showDelailsHandler(date: Date) {
       </div>
     </div>
     <base-modal v-model:visible="showDetails">
-      <time class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{
+      <time class="text-lg font-semibold text-gray-900 dark:text-gray-100 leading-none">{{
         new Date(selectedDay).toLocaleString("ru-RU", {
           year: "numeric",
           month: "long",

@@ -2,16 +2,17 @@
 import { ref, watch, onMounted } from "vue";
 import { usePeriodStore } from "@/stores/period";
 import { useAuth } from "@/composables/useAuth";
+import { useSalary } from "@/composables/useSalary";
+import { dateToLocaleWithTime } from "@/utils/format-date";
 
 const { user, loading, userProfile, logout } = useAuth();
+const { salaryHistory, formCreateData, setSalary } = useSalary();
 
 const periodStore = usePeriodStore();
 
-// Локальные ref для datepicker
 const startDate = ref(new Date(periodStore.startDate));
 const endDate = ref(new Date(periodStore.endDate));
 
-// Обработчик изменения дат
 const handleDateChange = () => {
   if (startDate.value && endDate.value) {
     periodStore.setPeriod(
@@ -21,7 +22,16 @@ const handleDateChange = () => {
   }
 };
 
-// Следим за изменениями в хранилище (на случай сброса или изменения из другого компонента)
+const validForm = computed(
+  () => !!(formCreateData.value.amount && formCreateData.value.effective_from)
+);
+
+function onSubmit() {
+  if (validForm.value) {
+    setSalary();
+  }
+}
+
 watch(
   () => [periodStore.startDate, periodStore.endDate],
   ([newStart, newEnd]) => {
@@ -75,6 +85,37 @@ onMounted(() => {
           >Сбросить до текущего месяца</base-button
         >
       </form>
+    </base-wrapper>
+
+    <base-wrapper headline="Изменения в зарплате" tag="h2">
+      <form class="space-y-4" @submit.prevent="onSubmit">
+        <FormFieldFloatInput
+          v-model="formCreateData.amount"
+          id="salary"
+          label="Оклад"
+        />
+        <FormFieldDate
+          v-model="formCreateData.effective_from"
+          :max-date="new Date()"
+          label="Дата изменения"
+        />
+        <base-button type="submit" :disabled="!validForm" :loading="loading">
+          Добавить
+        </base-button>
+      </form>
+      <div class="flex flex-wrap gap-2 mt-6">
+        <base-badge
+          v-for="salary in salaryHistory"
+          :key="salary.id"
+          hiddenClose
+        >
+          <span class="mr-1"
+            >С {{ dateToLocaleWithTime(salary.effective_from) }}</span
+          >
+          <span class="font-semibold">{{ salary.base_salary.toFixed(2) }}</span
+          ><RubleIcon class="inline-flex w-2 h-2 ml-0.5" />
+        </base-badge>
+      </div>
     </base-wrapper>
   </div>
 </template>

@@ -17,6 +17,13 @@ onMounted(() => {
 
 <template>
   <BaseLoader v-if="loading" />
+  <div v-else-if="!transactions.length" class="p-4">
+    <base-card-wrapper headline="Создайте транзакцию">
+      <router-link to="create/transaction">
+        <CreateCard />
+      </router-link>
+    </base-card-wrapper>
+  </div>
   <base-wrapper v-else headline="История транзакций">
     <div
       v-for="(values, key) in groupTransactionsByDay(transactions)"

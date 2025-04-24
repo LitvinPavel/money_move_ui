@@ -43,7 +43,7 @@ const navList = [
     class="fixed z-30 w-full h-16 max-w-sm -translate-x-1/2 bottom-4 left-1/2 pl-4 pr-[5.5rem]"
   >
     <div
-      class="grid h-full max-w-sm grid-cols-4 mx-auto bg-white border border-gray-200 rounded-full dark:bg-gray-700 dark:border-gray-600 overflow-hidden"
+      class="grid h-full max-w-sm grid-cols-4 mx-auto bg-gray-50 dark:bg-gray-700 rounded-full shadow-lg overflow-hidden"
     >
       <NavigationItem
         v-for="({ title, icon, link }, index) in navList"
@@ -56,7 +56,7 @@ const navList = [
         <template #icon>
           <component
             :is="icon"
-            class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+            class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           />
         </template>
       </NavigationItem>

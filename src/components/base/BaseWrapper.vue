@@ -19,7 +19,7 @@ withDefaults(defineProps<Props>(), {
 
 <template>
   <div
-    class="relative p-4 m-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 max-w-2xl mx-auto"
+    class="relative p-4 m-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 max-w-2xl mx-4 md:mx-auto"
   >
     <component :is="tag"
       class="absolute top-0 -mt-3 -ml-1 px-2 z-10 text-gray-500 dark:text-gray-400 text-sm"

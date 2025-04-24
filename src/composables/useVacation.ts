@@ -10,6 +10,10 @@ export function useVacation() {
   const error = ref<string | null>(null);
   const loading = ref(false);
   const vacations = ref<IVacation[]>([]);
+  const formCreateData = ref<IVacationQueryParams>({
+    startDate: undefined,
+    endDate: undefined
+  });
 
   // onMounted(() => {
   //   getVacations();
@@ -32,13 +36,12 @@ export function useVacation() {
   };
 
   const createVacation = async (
-    params: { startDate: Date | string; endDate: Date | string },
-    _callback: () => void
+    _callback?: () => void
   ): Promise<void> => {
     try {
-      const response = await api.post<IVacation>("/salary/vacations", params);
+      const response = await api.post<IVacation>("/salary/vacations", formCreateData.value);
       if (response.data) vacations.value.push(response.data);
-      _callback();
+      if (_callback) _callback();
     } catch (err) {
       showError(catchHandler(err, "Ошибка добавления отпуска"));
     } finally {
@@ -71,6 +74,7 @@ export function useVacation() {
   return {
     loading,
     vacations,
+    formCreateData,
     getVacations,
     createVacation,
     deleteVacation,

@@ -1,7 +1,7 @@
 import { ref, onMounted } from "vue";
 import { api } from "@/api";
 import catchHandler from "@/utils/catch-handler";
-import type { ISalaryPeriodCalculationResult, ISalary } from "@/models/salary";
+import type { ISalaryPeriodCalculationResult, ISalary, ISalaryQueryParams } from "@/models/salary";
 
 import { useError } from "@/composables/useError";
 
@@ -11,6 +11,10 @@ export function useSalary() {
   const loading = ref(false);
   const salaryHistory = ref<ISalary[]>([]);
   const salaryCalculation = ref<ISalaryPeriodCalculationResult | null>(null);
+  const formCreateData = ref<ISalaryQueryParams>({
+    amount: undefined,
+    effective_from: undefined
+  })
 
   onMounted(() => {
     getSalaryHistory();
@@ -30,14 +34,11 @@ export function useSalary() {
     }
   };
 
-  const setSalary = async (
-    params: { amount: number; effective_from: Date | string },
-    _callback: () => void
-  ): Promise<void> => {
+  const setSalary = async (_callback?: () => void): Promise<void> => {
     try {
-      const response = await api.post<ISalary>("/salary", params);
+      const response = await api.post<ISalary>("/salary", formCreateData.value);
       if (response.data) salaryHistory.value.push(response.data);
-      _callback();
+      if (_callback) _callback(); 
     } catch (err) {
       showError(catchHandler(err, "Ошибка добавления зарплаты"));
     } finally {
@@ -69,6 +70,7 @@ export function useSalary() {
     loading,
     salaryHistory,
     salaryCalculation,
+    formCreateData,
     setSalary,
     calculateSalary,
     refresh,

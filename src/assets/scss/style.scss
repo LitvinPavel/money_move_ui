@@ -1,4 +1,4 @@
-@use 'tailwind';
+@use "tailwind";
 @use "form";
 @use "datepicker";
 // @use '../fonts/fonts.css';
@@ -8,5 +8,12 @@ body {
 
     &:has(.backdrop) {
         @apply overflow-hidden md:overflow-auto;
+    }
+
+    .router-link-exact-active {
+        @apply pointer-events-none;
+        svg {
+            @apply text-blue-700;
+        }
     }
 }

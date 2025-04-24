@@ -10,6 +10,7 @@ export interface Props {
   placeholder?: string;
   maxDate?: Date | string;
   timePicker?: boolean;
+  disabledDates?: Date[] | string[];
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -29,6 +30,7 @@ const valueModel = useModel(props, "modelValue");
       :max-date="maxDate"
       :required="required"
       :placeholder="placeholder"
+      :disabled-dates="disabledDates"
       :format="timePicker ? 'dd.MM.yyyy HH:mm' : 'dd.MM.yyyy'"
       :enable-time-picker="timePicker"
       :dark="isDark"

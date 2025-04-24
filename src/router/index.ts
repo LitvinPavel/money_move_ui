@@ -4,9 +4,9 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/',
-      name: 'Root',
-      component: () => import('@/layouts/default-layout.vue'),
+      path: "/",
+      name: "Root",
+      component: () => import("@/layouts/default-layout.vue"),
       children: [
         {
           path: "",
@@ -46,10 +46,10 @@ const router = createRouter({
               path: "vacation",
               name: "CreateVacationPage",
               component: () => import("@/pages/create/vacation-page.vue"),
-            }
-          ]
-        }
-      ]
+            },
+          ],
+        },
+      ],
     },
     {
       path: "/sign-in",
@@ -63,20 +63,34 @@ const router = createRouter({
       component: () => import("@/pages/sign-up-page.vue"),
       meta: { title: "Регистрация" },
     },
-    // {
-    //   path: "/:pathMatch(.*)*",
-    //   name: "ErrorPage",
-    //   redirect: "/",
-    // },
+    {
+      path: "/preview",
+      name: "PreviewPage",
+      component: () => import("@/pages/preview-page.vue"),
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "ErrorPage",
+      redirect: "/",
+    },
   ],
 });
 
-// router.beforeEach(async (to, from, next) => {
-//   if (to.name === "SignInPage") {
-//     await authGuard(to, from, next);
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, _from, next) => {
+  if (
+    to.name !== "PreviewPage" &&
+    to.name !== "SignInPage" &&
+    to.name !== "SignUpPage"
+  ) {
+    const refreshToken = localStorage.getItem("mm_refreshToken");
+
+    if (!refreshToken) {
+      next({ name: "PreviewPage" });
+      return;
+    }
+  }
+
+  next();
+});
 
 export default router;

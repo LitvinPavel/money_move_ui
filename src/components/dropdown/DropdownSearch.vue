@@ -42,13 +42,12 @@ watch(selectedModel, (newVal: T | null) => {
 </script>
 <template>
   <div v-click-outside="closeDropdown" class="relative space-y-1">
-    <div class="relative">
+    <div class="relative" @click="showOptions = !showOptions">
       <input
         :id="id"
         type="text"
         class="form-field-input"
         readonly
-        @click="showOptions = !showOptions"
         :value="selectedModel ? selectedModel[optionKey] : placeholder"
       />
       <ChevronSortIcon
@@ -58,7 +57,7 @@ watch(selectedModel, (newVal: T | null) => {
 
     <div
       v-show="showOptions"
-      class="absolute w-full z-10 bg-white rounded-lg shadow-sm dark:bg-gray-700"
+      class="absolute w-full z-20 bg-white rounded-lg shadow-sm dark:bg-gray-800"
     >
       <BaseSearchInput
         v-model="searchModel"

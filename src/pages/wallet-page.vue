@@ -9,10 +9,16 @@ enum AccountTypeEnum {
 }
 
 const { accounts, loading } = useAccount();
-
 </script>
 <template>
   <BaseLoader v-if="loading" />
+  <div v-else-if="!accounts.length" class="p-4">
+    <base-card-wrapper headline="Создайте аккаунт">
+      <router-link to="create/account">
+        <CreateCard />
+      </router-link>
+    </base-card-wrapper>
+  </div>
   <div v-else class="p-4 space-y-6">
     <base-card-wrapper headline="Зарплата">
       <AccountCard
@@ -26,7 +32,8 @@ const { accounts, loading } = useAccount();
     <base-card-wrapper headline="Депозит">
       <AccountCard
         v-for="account in accounts.filter(
-          ({ type, is_salary }) => type === AccountTypeEnum.deposit && !is_salary
+          ({ type, is_salary }) =>
+            type === AccountTypeEnum.deposit && !is_salary
         )"
         :key="account.id"
         :account="account"
