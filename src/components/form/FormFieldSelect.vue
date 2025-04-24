@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends baseObj">
-import { useModel } from "vue";
+import { useModel, ref } from "vue";
 import AngleRightIcon from "../icons/AngleRightIcon.vue";
 
 export interface baseObj {
