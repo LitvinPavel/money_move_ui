@@ -35,6 +35,7 @@ const valueModel = useModel(props, "modelValue");
       :placeholder="placeholder"
       :pattern="pattern"
       :title="patternTitle"
+      autocorrect="on"
       class="form-field-input"
     />
   </form-field>
