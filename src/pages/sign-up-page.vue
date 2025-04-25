@@ -49,7 +49,7 @@ const handleRegister = async () => {
           required
         />
         <FormFieldInput
-          v-model="username"
+          v-model="email"
           id="email"
           label="Почта"
           autocomplete="email"
