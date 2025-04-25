@@ -9,6 +9,8 @@ export interface Props {
   autocomplete?: string;
   required?: boolean;
   placeholder?: string;
+  pattern?: string;
+  patternTitle?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -31,6 +33,8 @@ const valueModel = useModel(props, "modelValue");
       :autocomplete="autocomplete"
       :required="required"
       :placeholder="placeholder"
+      :pattern="pattern"
+      :title="patternTitle"
       class="form-field-input"
     />
   </form-field>

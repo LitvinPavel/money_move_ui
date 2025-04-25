@@ -61,6 +61,8 @@ const handleRegister = async () => {
           label="Пароль"
           type="password"
           required
+          pattern=".{8,}"
+          pattern-title="Минимум 8 символов"
         />
         <FormFieldInput
           v-model="confirmPassword"
@@ -68,6 +70,8 @@ const handleRegister = async () => {
           label="Подтвердите пароль"
           type="password"
           required
+          pattern=".{8,}"
+          pattern-title="Минимум 8 символов"
         />
 
         <base-button type="submit" :disabled="loading || !isFormValid">
