@@ -56,7 +56,7 @@ const navList = [
         <template #icon>
           <component
             :is="icon"
-            class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+            class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 lg:group-hover:text-gray-900 lg:dark:group-hover:text-white"
           />
         </template>
       </NavigationItem>

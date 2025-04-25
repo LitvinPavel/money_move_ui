@@ -47,7 +47,7 @@ onUnmounted(() => {
         :key="index"
         :to="link"
         type="button"
-        class="group flex justify-center items-center w-[52px] h-[52px] text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white bg-gray-50 dark:bg-gray-700 rounded-full shadow-lg"
+        class="group flex justify-center items-center w-[52px] h-[52px] text-gray-500 dark:text-gray-400 lg:hover:text-gray-900 lg:dark:hover:text-white bg-gray-50 dark:bg-gray-700 rounded-full shadow-lg"
         @click="closeMenu"
       >
         <component :is="icon" class="w-6 h-6" />
