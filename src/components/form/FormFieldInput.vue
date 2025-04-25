@@ -18,6 +18,8 @@ const props = withDefaults(defineProps<Props>(), {
   required: false,
   type: "text",
   placeholder: "",
+  pattern: '',
+  patternTitle: ''
 });
 
 const valueModel = useModel(props, "modelValue");
