@@ -17,9 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
   autocomplete: "off",
   required: false,
   type: "text",
-  placeholder: "",
-  pattern: '',
-  patternTitle: ''
+  placeholder: ""
 });
 
 const valueModel = useModel(props, "modelValue");
